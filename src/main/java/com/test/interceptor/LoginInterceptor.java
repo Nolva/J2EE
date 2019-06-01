@@ -29,7 +29,6 @@ public class LoginInterceptor  implements HandlerInterceptor {
         }
 
         HttpSession session = request.getSession();
-        System.out.println(session.getAttribute("manager"));
         if(session.getAttribute("manager") != null){
             return true;
         }
