@@ -37,9 +37,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span>${manager.managerId}，你好</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                            <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="logout"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
+                            <li><a href="#"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -52,8 +52,8 @@
         <div class="sidebar-scroll">
             <nav>
                 <ul class="nav">
-                    <li><a href="index" class="active"><i class="lnr lnr-home"></i> <span>首页</span></a></li>
-                    <li><a href="client.jsp" class=""><i class="lnr lnr-code"></i> <span>客户管理</span></a></li>
+                    <li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>首页</span></a></li>
+                    <li><a href="client.jsp" class="active"><i class="lnr lnr-code"></i> <span>客户管理</span></a></li>
                     <li><a href="product.jsp" class=""><i class="lnr lnr-code"></i> <span>产品管理</span></a></li>
                     <li><a href="employee.jsp" class=""><i class="lnr lnr-code"></i> <span>员工管理</span></a></li>
                     <li><a href="contact.jsp" class=""><i class="lnr lnr-code"></i> <span>合同管理</span></a></li>

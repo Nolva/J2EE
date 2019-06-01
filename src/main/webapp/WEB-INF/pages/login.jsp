@@ -9,14 +9,39 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企业信息管理系统</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/styles.css"/>
 </head>
 <body>
-${error}
-<form action="login" method="post">
-    Username: <input type="text" name="username"><br>
-    Password:<input type="password" name="password"><br>
-    <input type="submit" value="login">
-</form>
+<div class="htmleaf-container">
+    <div class="wrapper">
+        <div class="container">
+            <h1>Welcome</h1>
+
+            <form class="form" action="login" method="post">
+                <input type="text" required="required" placeholder="管理员" name="managerId">
+                <input type="password" required="required" placeholder="密码" name="manPassword">
+                <button type="submit" id="login-button">Login</button>
+            </form>
+        </div>
+
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</div>
+<script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

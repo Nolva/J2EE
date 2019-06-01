@@ -17,6 +17,24 @@
     <!-- 开启注解 -->
     <mvc:annotation-driven/>
 
+    <!--拦截器配置-->
+    <mvc:interceptors>
+        <!-- 登陆认证拦截器 -->
+        <mvc:interceptor>
+            <!-- /**表示所有url包括子url路径 -->
+            <mvc:mapping path="/**"/>
+            <bean class="com.test.interceptor.LoginInterceptor">
+                <property name="allowUrls">
+                    <list>   <!-- 这些list是可以访问的白名单，不需要验证session  -->
+                        <value>/tologin</value>
+                        <value>/login</value>
+                        <value>/logout</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <!--ViewResolver 视图解析器-->
     <!--用于支持Servlet、JSP视图解析-->
     <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
