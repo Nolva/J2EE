@@ -5,19 +5,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AdministratorDao {
+public class ManagerDao {
 
     private JdbcTemplate jdbcTemplate;
-    private final static String Match_COUNT_SQL="Select count(*) from user where username=? and password=?";
+    private final static String Match_COUNT_SQL="SELECT COUNT(*) FROM manager WHERE managerId=? AND manPassword=?";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int ValidUser(String username,String password){
-        System.out.println("sss");
-        return jdbcTemplate.queryForObject(Match_COUNT_SQL,new Object[]{username,password},Integer.class);
+    public int ValidManager(String managerId,String manPassword){
+        return jdbcTemplate.queryForObject(Match_COUNT_SQL,new Object[]{managerId,manPassword},Integer.class);
     }
 
 }
