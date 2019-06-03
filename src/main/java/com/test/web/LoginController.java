@@ -27,7 +27,7 @@ public class LoginController {
         HttpSession session = request.getSession();
         model.addAttribute("manager",session.getAttribute("manager"));
 //        System.out.println(session.getAttribute("manager"));
-        return "index";
+        return "redirect:/administrator/show";
     }
 
     //登录页面
@@ -41,6 +41,7 @@ public class LoginController {
     public String  login(HttpServletRequest request, Manager manager){
         boolean isValidUser= managerService.hasMatch(manager.getManagerId(),
                 manager.getManPassword());
+        //System.out.println(request.getParameter("managerId"));
         if (isValidUser){
             request.getSession().setAttribute("manager", manager);
             return "redirect:/index";
@@ -58,4 +59,5 @@ public class LoginController {
         session.invalidate();
         return "login";
     }
+
 }

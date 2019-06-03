@@ -5,7 +5,7 @@
   Time: 21:24
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -21,7 +21,7 @@
         <div class="container">
             <h1>Welcome</h1>
 
-            <form class="form" action="login" method="post">
+            <form class="form" action="login" method="post" >
                 <input type="text" required="required" placeholder="管理员" name="managerId">
                 <input type="password" required="required" placeholder="密码" name="manPassword">
                 <button type="submit" id="login-button">Login</button>

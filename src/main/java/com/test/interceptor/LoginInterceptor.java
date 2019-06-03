@@ -43,7 +43,7 @@ public class LoginInterceptor  implements HandlerInterceptor {
     //应用场景从modelAndView出发：将公用的模型数据（比如菜单导航）在这里传到视图，也可以在这里统一指定视图
     public void postHandle(HttpServletRequest request, HttpServletResponse response,
                            Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println(" LoginInterceptor..postHandle");
+        //System.out.println(" LoginInterceptor..postHandle");
     }
 
     //执行Handler完成后执行此方法
@@ -51,7 +51,7 @@ public class LoginInterceptor  implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request,
                                 HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        System.out.println("LoginInterceptor..afterCompletion");
+        //System.out.println("LoginInterceptor..afterCompletion");
     }
 
 }
