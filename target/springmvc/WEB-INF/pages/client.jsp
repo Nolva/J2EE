@@ -172,9 +172,12 @@
                         确定要删除该客户？删除后不可恢复！
                     </div>
                 </div>
+                <!-- 响应删除的js -->
+                function chk(clientId){ window.location.href="CustomerDao?clientId = "+clientId; }
+                <!-- 响应删除的js结束 -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-                    <button type="button" class="btn btn-xs btn-danger" >确 定</button>
+                    <button type="button" class="btn btn-xs btn-danger" onclick = "chk">确 定</button>
                 </div>
             </div>
             <!-- /.modal-content -->

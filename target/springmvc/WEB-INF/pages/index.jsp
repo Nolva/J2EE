@@ -55,7 +55,8 @@
             <nav>
                 <ul class="nav">
                     <li><a href="/index" class="active"><i class="lnr lnr-home"></i> <span>首页</span></a></li>
-                    <li><a href="client.jsp" class=""><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
+                    <!--加上/，去掉.jsp-->
+                    <li><a href="/client" class=""><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
                     <li><a href="product.jsp" class=""><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
                     <li><a href="employee.jsp" class=""><i class="lnr lnr-phone"></i> <span>员工管理</span></a></li>
                     <li><a href="contact.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
