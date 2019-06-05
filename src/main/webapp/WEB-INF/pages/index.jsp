@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-
 <head>
     <title>主页</title>
     <meta charset="utf-8">
@@ -73,7 +72,8 @@
                         <h3 class="panel-title">管理员管理</h3>
                     </div>
                     <div class="panel-body">
-                            <table class="table">
+                        <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#addChar">添加管理员</button>
+                        <table class="table">
                                 <thead>
                                 <tr>
                                     <th>管理员ID</th>
@@ -86,7 +86,9 @@
                                 <tbody>
                                 <c:forEach items="${managerList}" var="manager" varStatus="vs">
                                 <%--<s:property value="#vs.index+1"/><br>--%>
-                                    <tr>
+                                    <tr role="row" data-managerId="${manager.managerId}" data-manName="${manager.manName}"
+                                        data-manTelephone="${manager.manTelephone}" data-manEmail="${manager.manEmail}"
+                                        data-manPassword="${manager.manPassword}">
                                         <td>${manager.managerId}</td>
                                         <td>${manager.manName}</td>
                                         <td>${manager.manTelephone}</td>
@@ -99,6 +101,24 @@
                                 </c:forEach>
                                 </tbody>
                             </table>
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <span>第${currentPage}/${totalPage}页</span>
+                                    <span>总记录${totalCount}条</span>
+                                    <span>
+                                        <c:if test="${currentPage!=1}">
+                                        <a href="${pageContext.request.contextPath}/administrator/show?page=1">首页</a>
+                                        <a href="${pageContext.request.contextPath}/administrator/show?page=${currentPage-1}">上一页</a>
+                                        </c:if>
+                                        <c:if test="${currentPage!=totalPage}">
+                                        <a href="${pageContext.request.contextPath }/administrator/show?page=${currentPage+1}">下一页</a>
+                                        <a href="${pageContext.request.contextPath }/administrator/show?page=${totalPage}">尾页</a>
+                                        </c:if>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
                         </div>
                 </div>
             </div>
@@ -106,8 +126,8 @@
     </div>
     <!-- END MAIN代码添加区域结尾 -->
     <!--弹出窗口区 -->
-    <!--修改权限弹出窗口-->
-    <div class="modal fade" id="changeChar" role="dialog" aria-labelledby="gridSystemModalLabel1">
+    <!--修改弹出窗口-->
+    <div class="modal fade" id="changeChar" role="dialog" aria-hidden="true" aria-labelledby="gridSystemModalLabel1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -117,6 +137,12 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <form class="form-horizontal" action="/administrator/change" method="post">
+                            <div class="form-group " style="display:none;">
+                                <label for="managerId" class="col-xs-3 control-label">管理员Id：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="managerId" name="managerId" }>
+                                </div>
+                            </div>
                             <div class="form-group ">
                                 <label for="manName" class="col-xs-3 control-label">管理员姓名：</label>
                                 <div class="col-xs-6 ">
@@ -135,10 +161,15 @@
                                     <input type="" class="form-control input-sm duiqi" id="manEmail" name="manEmail" placeholder="">
                                 </div>
                             </div>
-
+                            <div class="form-group ">
+                                <label for="manPassword" class="col-xs-3 control-label">管理员密码：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="password" required="required" class="form-control input-sm duiqi" id="manPassword" name="manPassword" placeholder="">
+                                </div>
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-                                <button type="submit" class="btn btn-xs btn-green">保 存</button>
+                                <button type="submit" class="btn btn-xs btn-green">修 改</button>
                             </div>
 
                         </form>
@@ -151,7 +182,7 @@
     </div>
     <!-- /.modal -->
 
-    <!--弹出删除权限警告窗口-->
+    <!--删除警告窗口-->
     <div class="modal fade" id="deleteChar" role="dialog" aria-labelledby="gridSystemModalLabel2">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -161,19 +192,83 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        确定要删除该管理员？删除后不可恢复！
+                        <form class="form-horizontal" action="/administrator/delete" method="post">
+                            <div class="form-group " style="display:none;">
+                                <label for="managerId2" class="col-xs-3 control-label">管理员Id：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="managerId2" name="managerId" >
+                                </div>
+                            </div>
+                            <div class="form-group " >
+                                确定要删除该管理员？删除后不可恢复！
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+                                <button type="submit" class="btn btn-xs btn-green">确 定</button>
+                            </div>
+                            </form>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
-                    <button type="button" class="btn btn-xs btn-danger">确 定</button>
                 </div>
             </div>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
+
+    <%--添加管理员弹出窗口--%>
+    <div class="modal fade" id="addChar" role="dialog" aria-hidden="true" aria-labelledby="gridSystemModalLabel3">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel3">添加管理员</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form class="form-horizontal" action="/administrator/add" method="post">
+                            <div class="form-group " >
+                                <label for="managerId3" class="col-xs-3 control-label">管理员Id：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="managerId3" name="managerId" }>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="manPassword3" class="col-xs-3 control-label">管理员密码：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="password" required="required" class="form-control input-sm duiqi" id="manPassword3" name="manPassword" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="manName3" required="required" class="col-xs-3 control-label">管理员姓名：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="manName3" name="manName" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="manTelephone3" class="col-xs-3 control-label">管理员电话：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="manTelephone3" name="manTelephone" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="manEmail3" class="col-xs-3 control-label">管理员邮箱：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="manEmail3" name="manEmail" placeholder="">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+                                <button type="submit" class="btn btn-xs btn-green">添加</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
     <div class="clearfix"></div>
     <footer>
@@ -191,6 +286,30 @@
 <script src="${pageContext.request.contextPath}/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/chartist/js/chartist.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/scripts/common.js"></script>
+<script>
+    // 编辑对话框
+    $('#changeChar').on('show.bs.modal',function(event){
+        var source = event.relatedTarget;
+        var $tr = $(source).closest('tr');
+        var managerId = $tr.attr('data-managerId');
+        var manName = $tr.attr('data-manName');
+        var manTelephone = $tr.attr('data-manTelephone');
+        var manEmail = $tr.attr('data-manEmail');
+        var manPassword = $tr.attr('data-manPassword');
+        $(':input[name="managerId"]','#changeChar').val(managerId);
+        $(':input[name="manName"]','#changeChar').val(manName);
+        $(':input[name="manTelephone"]','#changeChar').val(manTelephone);
+        $(':input[name="manEmail"]','#changeChar').val([manEmail]);
+        $(':input[name="manPassword"]','#changeChar').val([manPassword]);
+    });
+
+    $('#deleteChar').on('show.bs.modal',function(event){
+        var source = event.relatedTarget;
+        var $tr = $(source).closest('tr');
+        var managerId = $tr.attr('data-managerId');
+        $(':input[name="managerId"]','#deleteChar').val(managerId);
+    });
+</script>
 </body>
 
 </html>
