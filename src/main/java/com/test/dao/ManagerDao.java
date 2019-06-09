@@ -50,21 +50,17 @@ public class ManagerDao {
 
     //更新管理员信息
     public void UpdateManagerInfo(Manager manager){
-
         jdbcTemplate.update(UPDATE_MANAGER_INFO_SQL, new Object[] {manager.getManPassword(),
                 manager.getManName(), manager.getManTelephone(),
                 manager.getManEmail(), manager.getManagerId()});
     }
 
     //删除管理员
-    public int DeleteManager(String managerId){
-        return jdbcTemplate.update(DELETE_MANAGER_SQL, managerId);
-    }
+    public int DeleteManager(String managerId){ return jdbcTemplate.update(DELETE_MANAGER_SQL, new Object[] {managerId}); }
 
     //查询管理员是否存在
-    public int SearchManager(String managerId){
-        return jdbcTemplate.queryForObject(SEARCH_MANAGER_SQL, new Object[] {managerId},Integer.class);
-    }
+    public int SearchManager(String managerId){ return jdbcTemplate.queryForObject(SEARCH_MANAGER_SQL,
+            new Object[] {managerId},Integer.class); }
 
     //添加管理员
     public int AddManager(Manager manager){
