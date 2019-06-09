@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>主页</title>
+    <title>产品管理</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -58,7 +58,7 @@
                     <li><a href="client.jsp" class=""><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
                     <li><a href="/product/products" class="active"><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
                     <li><a href="employee.jsp" class=""><i class="lnr lnr-phone"></i> <span>员工管理</span></a></li>
-                    <li><a href="contact.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
+                    <li><a href="contract.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -86,7 +86,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${prodcutList}" var="product" varStatus="vs">
+                            <c:forEach items="${productList}" var="product" varStatus="vs">
                                 <%--<s:property value="#vs.index+1"/><br>--%>
                                 <tr role="row" data-productId="${product.productId}" data-productName="${product.productName}"
                                     data-productModel="${product.productModel}" data-productNum="${product.productNum}"
@@ -136,7 +136,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="gridSystemModalLabel1">修改管理员信息</h4>
+                    <h4 class="modal-title" id="gridSystemModalLabel1">修改产品信息</h4>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
@@ -144,31 +144,31 @@
                             <div class="form-group " style="display:none;">
                                 <label for="productId" class="col-xs-3 control-label">产品Id：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="" class="form-control input-sm duiqi" id="productId" name="productId" }>
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="productId" name="productId" }>
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label for="productName" class="col-xs-3 control-label">产品名称：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="" class="form-control input-sm duiqi" id="productName" name="productName" placeholder="">
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="productName" name="productName" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label for="productModel" class="col-xs-3 control-label">产品型号：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="" class="form-control input-sm duiqi" id="productModel" name="productModel" placeholder="">
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="productModel" name="productModel" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label for="productNum" class="col-xs-3 control-label">产品数量：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="" class="form-control input-sm duiqi" id="productNum" name="productNum" placeholder="">
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="productNum" name="productNum" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label for="productPrice" class="col-xs-3 control-label">产品价格：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="" class="form-control input-sm duiqi" id="productPrice" name="productPrice" placeholder="">
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="productPrice" name="productPrice" placeholder="">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -196,15 +196,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <form class="form-horizontal" action="/product/delete" method="post">
+                        <form class="form-horizontal" action="/product/deleteProduct" method="post">
                             <div class="form-group " style="display:none;">
-                                <label for="managerId2" class="col-xs-3 control-label">管理员Id：</label>
+                                <label for="productId2" class="col-xs-3 control-label">产品Id：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="" class="form-control input-sm duiqi" id="managerId2" name="managerId" >
+                                    <input type="" class="form-control input-sm duiqi" id="productId2" name="productId" >
                                 </div>
                             </div>
                             <div class="form-group " >
-                                确定要删除该管理员？删除后不可恢复！
+                                确定要删除该产品？删除后不可恢复！
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
@@ -219,45 +219,45 @@
         <!-- /.modal-dialog -->
     </div>
 
-    <%--添加管理员弹出窗口--%>
+    <%--添加弹出窗口--%>
     <div class="modal fade" id="addChar" role="dialog" aria-hidden="true" aria-labelledby="gridSystemModalLabel3">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="gridSystemModalLabel3">添加管理员</h4>
+                    <h4 class="modal-title" id="gridSystemModalLabel3">添加产品</h4>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <form class="form-horizontal" action="/product/add" method="post">
+                        <form class="form-horizontal" action="/product/addProduct" method="post">
                             <div class="form-group " >
-                                <label for="managerId3" class="col-xs-3 control-label">管理员Id：</label>
+                                <label for="productId3" class="col-xs-3 control-label">产品Id：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="" required="required" class="form-control input-sm duiqi" id="managerId3" name="managerId" }>
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="productId3" name="productId" }>
                                 </div>
                             </div>
                             <div class="form-group ">
-                                <label for="manPassword3" class="col-xs-3 control-label">管理员密码：</label>
+                                <label for="productName3" class="col-xs-3 control-label">产品名称：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="password" required="required" class="form-control input-sm duiqi" id="manPassword3" name="manPassword" placeholder="">
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="productName3" name="productName" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group ">
-                                <label for="manName3" required="required" class="col-xs-3 control-label">管理员姓名：</label>
+                                <label for="productModel3"  class="col-xs-3 control-label">产品型号：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="" class="form-control input-sm duiqi" id="manName3" name="manName" placeholder="">
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="productModel3" name="productModel" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group ">
-                                <label for="manTelephone3" class="col-xs-3 control-label">管理员电话：</label>
+                                <label for="productNum3"  class="col-xs-3 control-label">产品数量：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="" class="form-control input-sm duiqi" id="manTelephone3" name="manTelephone" placeholder="">
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="productNum3" name="productNum" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group ">
-                                <label for="manEmail3" class="col-xs-3 control-label">管理员邮箱：</label>
+                                <label for="productPrice3"  class="col-xs-3 control-label">产品价格：</label>
                                 <div class="col-xs-6 ">
-                                    <input type="" class="form-control input-sm duiqi" id="manEmail3" name="manEmail" placeholder="">
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="productPrice3" name="productPrice" placeholder="">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -290,6 +290,32 @@
 <script src="${pageContext.request.contextPath}/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/chartist/js/chartist.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/scripts/common.js"></script>
+<script>
+    // 编辑对话框
+    $('#changeChar').on('show.bs.modal',function(event){
+        var source = event.relatedTarget;
+        var $tr = $(source).closest('tr');
+        var productId = $tr.attr('data-productId');
+        var productName = $tr.attr('data-productName');
+        var productModel = $tr.attr('data-productModel');
+        var productNum = $tr.attr('data-productNum');
+        var productPrice = $tr.attr('data-productPrice');
+        $(':input[name="productId"]','#changeChar').val(productId);
+        $(':input[name="productName"]','#changeChar').val(productName);
+        $(':input[name="productModel"]','#changeChar').val(productModel);
+        $(':input[name="productNum"]','#changeChar').val([productNum]);
+        $(':input[name="productPrice"]','#changeChar').val([productPrice]);
+
+    });
+
+    $('#deleteChar').on('show.bs.modal',function(event){
+        var source = event.relatedTarget;
+        var $tr = $(source).closest('tr');
+        var productId = $tr.attr('data-productId');
+        $(':input[name="productId"]','#deleteChar').val(productId);
+    });
+
+</script>
 </body>
 
 </html>

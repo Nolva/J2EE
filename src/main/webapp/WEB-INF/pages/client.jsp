@@ -58,7 +58,7 @@
                     <li><a href="client.jsp" class="active"><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
                     <li><a href="product.jsp" class=""><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
                     <li><a href="employee.jsp" class=""><i class="lnr lnr-phone"></i> <span>员工管理</span></a></li>
-                    <li><a href="contact.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
+                    <li><a href="contract.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
                 </ul>
             </nav>
         </div>

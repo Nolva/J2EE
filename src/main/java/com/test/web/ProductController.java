@@ -43,9 +43,8 @@ public class ProductController {
         //每页开始的第几条记录
         int startRow = (Integer.parseInt(page)-1) * PRODUCT_PAGE_SIZE;
         productList = productService.ListProductByPage(startRow, PRODUCT_PAGE_SIZE);
-        System.out.print("page: "+page+" startrow:"+startRow);
         model.addAttribute("currentPage", Integer.parseInt(page));
-        model.addAttribute("ProductList", productList);
+        model.addAttribute("productList", productList);
 
         return new ModelAndView("product");
     }
@@ -53,7 +52,7 @@ public class ProductController {
     @RequestMapping("/addProduct")
     public String Product_add(HttpServletRequest request, Product product){
         HttpSession session = request.getSession();
-        if (session.getAttribute("product") != null) {
+        if (session.getAttribute("manager") != null) {
             int isAdd = productService.addProduct(product);
             if (isAdd == -1){
                 request.setAttribute("productInfo", "添加产品失败！");
@@ -71,7 +70,7 @@ public class ProductController {
     @RequestMapping("/deleteProduct")
     public String product_delete(HttpServletRequest request, Product product) {
         HttpSession session = request.getSession();
-        if (session.getAttribute("product") != null) {
+        if (session.getAttribute("manager") != null) {
             boolean isDelete = productService.deleteProduct(product.getProductId());
             if (!isDelete) {
                 request.setAttribute("productInfo", "无法删除该产品！");
@@ -87,7 +86,7 @@ public class ProductController {
     @RequestMapping("/updateProduct")
     public String update(HttpServletRequest request, Product product){
         HttpSession session = request.getSession();
-        if (session.getAttribute("product") != null) {
+        if (session.getAttribute("manager") != null) {
             boolean isUpdate = productService.updateProductId(product);
             if (!isUpdate) {
                 request.setAttribute("productInfo", "无法修改该产品！");

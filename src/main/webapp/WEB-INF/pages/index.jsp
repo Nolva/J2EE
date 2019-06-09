@@ -58,7 +58,7 @@
                     <li><a href="client.jsp" class=""><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
                     <li><a href="/product/products" class=""><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
                     <li><a href="employee.jsp" class=""><i class="lnr lnr-phone"></i> <span>员工管理</span></a></li>
-                    <li><a href="contact.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
+                    <li><a href="contract.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -170,12 +170,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label  class="col-xs-3  control-label">开始时间</label>
-                                <div id="datetimepicker1" class="input-group date col-xs-6" >
-                                    <input type='text' class="form-control" />
-                                    <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                                <label  class="col-xs-3  control-label">开始时间：</label>
+                                <div class=" col-xs-6">
+                                    <div id="datetimepicker1" class="input-group date" >
+                                        <input type='text' class="form-control nput-sm duiqi" />
+                                        <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 

@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>主页</title>
+    <title>合同管理</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -55,10 +55,10 @@
             <nav>
                 <ul class="nav">
                     <li><a href="/index" class=""><i class="lnr lnr-home"></i> <span>首页</span></a></li>
-                    <li><a href="client.jsp" class="active"><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
-                    <li><a href="product.jsp" class=""><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
+                    <li><a href="client.jsp" class=""><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
+                    <li><a href="/product/products" class=""><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
                     <li><a href="employee.jsp" class=""><i class="lnr lnr-phone"></i> <span>员工管理</span></a></li>
-                    <li><a href="contact.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
+                    <li><a href="contract.jsp" class="active"><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -70,10 +70,10 @@
             <div class="container-fluid">
                 <div class="panel panel-headline">
                     <div class="panel-heading">
-                        <h3 class="panel-title">管理员管理</h3>
+                        <h3 class="panel-title">合同管理</h3>
                     </div>
                     <div class="panel-body">
-                        修改这里
+
 
                     </div>
                 </div>

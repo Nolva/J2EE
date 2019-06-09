@@ -56,7 +56,7 @@ public class ManagerController {
         //每页开始的第几条记录
         int startRow = (Integer.parseInt(page)-1) * MANAGER_PAGE_SIZE;
         managerList = managerService.ListManagerByPage(startRow, MANAGER_PAGE_SIZE);
-        //System.out.print("page: "+page+" startrow:"+startRow);
+        System.out.print("乱码了吗？");
         //request.setAttribute("currentPage", Integer.parseInt(page));
         model.addAttribute("currentPage", Integer.parseInt(page));
         //request.setAttribute("managerList", managerList);
