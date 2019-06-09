@@ -1,7 +1,6 @@
 package com.test.dao;
 
 import com.test.Page.Page;
-import com.test.Page.PageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
