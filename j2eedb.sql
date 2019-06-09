@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地
+ Source Server         : MySQL
  Source Server Type    : MySQL
- Source Server Version : 80015
+ Source Server Version : 80016
  Source Host           : localhost:3306
  Source Schema         : j2eedb
 
  Target Server Type    : MySQL
- Target Server Version : 80015
+ Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 01/06/2019 13:00:03
+ Date: 05/06/2019 14:51:36
 */
 
 SET NAMES utf8mb4;
@@ -89,6 +89,7 @@ CREATE TABLE `manager`  (
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product`  (
   `productId` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `productName` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `productModel` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `productNum` decimal(10, 0) NULL DEFAULT NULL,
   `productPrice` decimal(10, 0) NULL DEFAULT NULL,

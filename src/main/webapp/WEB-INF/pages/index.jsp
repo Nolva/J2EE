@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap-datetimepicker.min.css" >
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/linearicons/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/chartist/css/chartist-custom.css">
@@ -167,6 +168,17 @@
                                     <input type="password" required="required" class="form-control input-sm duiqi" id="manPassword" name="manPassword" placeholder="">
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label  class="col-xs-3  control-label">开始时间</label>
+                                <div id="datetimepicker1" class="input-group date col-xs-6" >
+                                    <input type='text' class="form-control" />
+                                    <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
                                 <button type="submit" class="btn btn-xs btn-green">修 改</button>
@@ -282,10 +294,15 @@
 <!-- Javascript -->
 <script src="${pageContext.request.contextPath}/assets/vendor/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap-datetimepicker.min.js" ></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap-datetimepicker.js" ></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" ></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap-datetimepicker.fr.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/chartist/js/chartist.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/scripts/common.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/moment-with-locales.min.js"></script>
 <script>
     // 编辑对话框
     $('#changeChar').on('show.bs.modal',function(event){
@@ -301,6 +318,20 @@
         $(':input[name="manTelephone"]','#changeChar').val(manTelephone);
         $(':input[name="manEmail"]','#changeChar').val([manEmail]);
         $(':input[name="manPassword"]','#changeChar').val([manPassword]);
+
+        var picker1 =  $('#datetimepicker1').datetimepicker({
+            //startView: 4,  //起始选择范围
+            maxView: 4, //最大选择范围
+            minView: 2, //最小选择范围
+            endDate: new Date(),
+            todayHighlight : 1,// 当前时间高亮显示
+            autoclose : 1,// 选择时间后弹框自动消失
+            format : 'yyyy-mm-dd',// 时间格式
+            language : 'zh-CN',// 汉化
+            // // todayBtn:"linked",//显示今天 按钮
+            //clearBtn :1 // 清除按钮，和今天 按钮只能显示一个
+        });
+
     });
 
     $('#deleteChar').on('show.bs.modal',function(event){
@@ -309,6 +340,7 @@
         var managerId = $tr.attr('data-managerId');
         $(':input[name="managerId"]','#deleteChar').val(managerId);
     });
+
 </script>
 </body>
 
