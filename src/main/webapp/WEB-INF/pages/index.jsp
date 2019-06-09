@@ -56,7 +56,7 @@
                 <ul class="nav">
                     <li><a href="/index" class="active"><i class="lnr lnr-home"></i> <span>首页</span></a></li>
                     <li><a href="client.jsp" class=""><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
-                    <li><a href="product.jsp" class=""><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
+                    <li><a href="/product/products" class=""><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
                     <li><a href="employee.jsp" class=""><i class="lnr lnr-phone"></i> <span>员工管理</span></a></li>
                     <li><a href="contact.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
                 </ul>
@@ -133,7 +133,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="gridSystemModalLabel1">修改管理员信息</h4>
+                    <h4 class="modal-title" id="gridSystemModalLabel1">修改产品信息</h4>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
