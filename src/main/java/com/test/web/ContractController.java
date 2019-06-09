@@ -48,7 +48,7 @@ public class ContractController {
 
         return new ModelAndView("contract");
     }
-    //增加产品
+    //增加合同
     @RequestMapping("/addContract")
     public String Product_add(HttpServletRequest request, Contract contract){
         HttpSession session = request.getSession();
@@ -66,7 +66,7 @@ public class ContractController {
         return "redirect:/contract/contracts";
     }
 
-    //删除产品
+    //删除合同
     @RequestMapping("/deleteContract")
     public String product_delete(HttpServletRequest request, Contract contract) {
         HttpSession session = request.getSession();
@@ -82,7 +82,7 @@ public class ContractController {
         return "redirect:/contract/contracts";
     }
 
-    //修改商品
+    //修改合同
     @RequestMapping("/updateContract")
     public String update(HttpServletRequest request, Contract contract){
         HttpSession session = request.getSession();
