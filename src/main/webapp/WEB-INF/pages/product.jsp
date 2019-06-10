@@ -58,7 +58,7 @@
                     <li><a href="client.jsp" class=""><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
                     <li><a href="/product/products" class="active"><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
                     <li><a href="employee.jsp" class=""><i class="lnr lnr-phone"></i> <span>员工管理</span></a></li>
-                    <li><a href="contract.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
+                    <li><a href="/contract/contracts" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -77,7 +77,7 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>产品ID</th>
+                                <th>产品编号</th>
                                 <th>产品名称</th>
                                 <th>产品型号</th>
                                 <th>产品数量</th>
@@ -91,6 +91,7 @@
                                 <tr role="row" data-productId="${product.productId}" data-productName="${product.productName}"
                                     data-productModel="${product.productModel}" data-productNum="${product.productNum}"
                                     data-productPrice="${product.productPrice}">
+                                    <%--<td>${vs.index+1+(currentPage-1)*5}</td>--%>
                                     <td>${product.productId}</td>
                                     <td>${product.productName}</td>
                                     <td>${product.productModel}</td>

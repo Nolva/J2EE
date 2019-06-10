@@ -1,6 +1,5 @@
 package com.test.dao;
 
-import com.test.Page.Page;
 import com.test.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -75,14 +74,6 @@ public class ProductDao {
     //当前页的集合
     public List<Product> ListProductByPage(int startIndex, int pageSize){
         return jdbcTemplate.query(SELECT_BY_PAGE,new Object[]{startIndex,pageSize},new BeanPropertyRowMapper<>(Product.class));
-    }
-    //当前页的集合
-    public Page getPage(int pageNum, Class clazz, String sql, int totalRecord){
-        Page page = new Page(pageNum, totalRecord);
-        sql = sql+" LIMIT "+page.getStartIndex()+","+page.getPageSize();
-        List list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(clazz));
-        page.setList(list);
-        return page;
     }
 
     //是否已存在productId

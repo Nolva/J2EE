@@ -58,7 +58,7 @@
                     <li><a href="client.jsp" class=""><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
                     <li><a href="/product/products" class=""><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
                     <li><a href="employee.jsp" class=""><i class="lnr lnr-phone"></i> <span>员工管理</span></a></li>
-                    <li><a href="contract.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
+                    <li><a href="/contract/contracts" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -120,7 +120,7 @@
                                 </td>
                             </tr>
                         </table>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -169,17 +169,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label  class="col-xs-3  control-label">开始时间：</label>
-                                <div class=" col-xs-6">
-                                    <div id="datetimepicker1" class="input-group date" >
-                                        <input type='text' class="form-control nput-sm duiqi" />
-                                        <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
@@ -315,26 +304,16 @@
         var manTelephone = $tr.attr('data-manTelephone');
         var manEmail = $tr.attr('data-manEmail');
         var manPassword = $tr.attr('data-manPassword');
+
         $(':input[name="managerId"]','#changeChar').val(managerId);
         $(':input[name="manName"]','#changeChar').val(manName);
         $(':input[name="manTelephone"]','#changeChar').val(manTelephone);
         $(':input[name="manEmail"]','#changeChar').val([manEmail]);
         $(':input[name="manPassword"]','#changeChar').val([manPassword]);
 
-        var picker1 =  $('#datetimepicker1').datetimepicker({
-            //startView: 4,  //起始选择范围
-            maxView: 4, //最大选择范围
-            minView: 2, //最小选择范围
-            endDate: new Date(),
-            todayHighlight : 1,// 当前时间高亮显示
-            autoclose : 1,// 选择时间后弹框自动消失
-            format : 'yyyy-mm-dd',// 时间格式
-            language : 'zh-CN',// 汉化
-            // // todayBtn:"linked",//显示今天 按钮
-            //clearBtn :1 // 清除按钮，和今天 按钮只能显示一个
-        });
 
     });
+
 
     $('#deleteChar').on('show.bs.modal',function(event){
         var source = event.relatedTarget;
