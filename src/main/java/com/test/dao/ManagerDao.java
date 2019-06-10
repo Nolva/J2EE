@@ -22,6 +22,7 @@ public class ManagerDao {
     private final static String DELETE_MANAGER_SQL = "DELETE FROM manager WHERE managerId=?";
     private final static String SEARCH_MANAGER_SQL = "SELECT COUNT(*) FROM manager WHERE managerId=?";
     private final static String INSERT_MANAGER_SQL = "INSERT INTO manager VALUES(?,?,?,?,?,?)";
+    private final static String MANAGER_NUM = "SELECT COUNT(*) FROM manager";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -68,6 +69,10 @@ public class ManagerDao {
                 manager.getManPassword(),
                 manager.getManName(), manager.getManTelephone(),
                 manager.getManEmail(), 1});
+    }
+
+    public int getManagerNum(){
+        return jdbcTemplate.queryForObject(MANAGER_NUM, Integer.class);
     }
 
 }

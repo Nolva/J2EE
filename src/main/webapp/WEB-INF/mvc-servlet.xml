@@ -37,6 +37,7 @@
                         <value>/tologin</value>
                         <value>/login</value>
                         <value>/logout</value>
+                        <value>/error/404</value>
                     </list>
                 </property>
             </bean>

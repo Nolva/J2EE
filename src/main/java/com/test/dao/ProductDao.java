@@ -27,6 +27,7 @@ public class ProductDao {
     private static final String SELECT_BY_PAGE ="SELECT * FROM Product ORDER BY productId LIMIT ?,?";
     private static final String EXIST_PRODUCT = "SELECT COUNT(*) FROM Product WHERE productId=?";
     private static final String PRODUCT_SPECIES = "SELECT COUNT(*) FROM Product";
+
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -84,6 +85,7 @@ public class ProductDao {
     public int ProductSpecies(){
         return jdbcTemplate.queryForObject(PRODUCT_SPECIES,Integer.class);
     }
+
     //批量操作(增删改)
     public int[] batchUpdate(final List products) {
 
@@ -107,4 +109,6 @@ public class ProductDao {
         );
         return updateCounts;
     }
+
+
 }

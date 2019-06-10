@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : MySQL
+ Source Server         : 本地
  Source Server Type    : MySQL
- Source Server Version : 80016
+ Source Server Version : 80015
  Source Host           : localhost:3306
  Source Schema         : j2eedb
 
  Target Server Type    : MySQL
- Target Server Version : 80016
+ Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 05/06/2019 14:51:36
+ Date: 10/06/2019 21:57:54
 */
 
 SET NAMES utf8mb4;
@@ -45,7 +45,7 @@ CREATE TABLE `contract`  (
   `contractValidity` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`contractId`) USING BTREE,
   UNIQUE INDEX `contractId`(`contractId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for employee
@@ -55,10 +55,10 @@ CREATE TABLE `employee`  (
   `employeeId` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `empName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `empSex` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `empBirthday` datetime(0) NULL DEFAULT NULL,
+  `empBirthday` date NULL DEFAULT NULL,
   `empDepartment` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `empTitle` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `empHireDate` datetime(0) NULL DEFAULT NULL,
+  `empHireDate` date NULL DEFAULT NULL,
   `empSalary` decimal(10, 0) NULL DEFAULT NULL,
   `empTelephone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `empEmail` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
@@ -82,6 +82,11 @@ CREATE TABLE `manager`  (
   PRIMARY KEY (`managerId`) USING BTREE,
   UNIQUE INDEX `managerId`(`managerId`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of manager
+-- ----------------------------
+INSERT INTO `manager` VALUES ('admin', '123456', '老板', '12345678901', '12345678901@qq.com', 2);
 
 -- ----------------------------
 -- Table structure for product

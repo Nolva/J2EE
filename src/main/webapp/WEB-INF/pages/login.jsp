@@ -24,7 +24,7 @@
             <form class="form" action="login" method="post" >
                 <input type="text" required="required" placeholder="管理员" name="managerId">
                 <input type="password" required="required" placeholder="密码" name="manPassword">
-                <button type="submit" id="login-button">Login</button>
+                <button type="submit" id="login-button">登录</button>
             </form>
         </div>
 

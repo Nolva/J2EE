@@ -2,6 +2,8 @@ package com.test.service;
 
 import com.test.dao.ProductDao;
 import com.test.entity.Product;
+import com.test.dao.PageDao;
+import com.test.dao.PageDaoImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +11,15 @@ import java.util.List;
 
 @Service
 public class ProductService {
+
     private ProductDao productDao;
+    private PageDao pageDao;
+    private static int PAGE_SIZE = 5;
 
     @Autowired
-    public void setProductDao(ProductDao productDao){ this.productDao = productDao; }
+    public void setPage(ProductDao productDao){ this.productDao = productDao; }
+    @Autowired
+    public void setPageDao(PageDao pageDao) { this.pageDao = pageDao; }
 
     //添加产品
     //1表示productId已存在，2表示添加成功，-1表示添加失败
@@ -38,6 +45,7 @@ public class ProductService {
     }
     //查询单个的信息
     public List<Product> getProductById(Integer productId){ return productDao.getProductById(productId); }
+
     //删除
     public boolean deleteProduct(String productId){
         int count = productDao.deleteProduct(productId);
@@ -47,8 +55,22 @@ public class ProductService {
     public List<Product> ListProduct(){
         return productDao.ListProduct();
     }
+
     //分页查询
-    public List<Product> ListProductByPage(int startIndex, int pageSize){
-        return productDao.ListProductByPage(startIndex, pageSize);
+    public List<Product> ListProductByPage(int pageNum){
+        return productDao.ListProductByPage(pageNum*PAGE_SIZE, PAGE_SIZE);
     }
+
+
+    //返回产品总数量
+    public int getProductNum(){
+        return productDao.ProductSpecies();
+    }
+
+    //返回总页数
+    public int getTotalPage(){
+        int total = productDao.ProductSpecies();
+        return pageDao.getTotalPage(total, PAGE_SIZE);
+    }
+
 }

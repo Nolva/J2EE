@@ -1,6 +1,7 @@
 package com.test.service;
 
 import com.test.dao.ManagerDao;
+import com.test.dao.PageDao;
 import com.test.entity.Manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,11 +11,16 @@ import java.util.List;
 @Service
 public class ManagerService {
     private ManagerDao managerDAO;
+    private static int PAGE_SIZE = 5;
+    private PageDao pageDao;
+
 
     @Autowired
     public void setUserDAO(ManagerDao managerDAO) {
         this.managerDAO = managerDAO;
     }
+    @Autowired
+    public void setPageDao(PageDao pageDao) { this.pageDao = pageDao; }
 
     public boolean hasMatch(String managerId,String manPassword){
         int count= managerDAO.ValidManager(managerId,manPassword);
@@ -27,8 +33,8 @@ public class ManagerService {
     }
 
     //分页查询管理员
-    public List<Manager> ListManagerByPage(int startRow, int pageSize){
-        return managerDAO.ListManagerByPage(startRow, pageSize);
+    public List<Manager> ListManagerByPage(int startRow){
+        return managerDAO.ListManagerByPage(startRow*PAGE_SIZE, PAGE_SIZE);
     }
 
     //判断是否为超级管理员
@@ -50,6 +56,7 @@ public class ManagerService {
 
     //删除管理员
     public boolean DeleteManager(String managerId){
+        System.out.println(managerId);
         if(isSuperManager(managerId))
             return false;
         int count = managerDAO.DeleteManager(managerId);
@@ -67,4 +74,14 @@ public class ManagerService {
             return 2;
         return -1;
     }
+
+    public int getManagerNum(){
+        return  managerDAO.getManagerNum();
+    }
+
+    public int getTotalPage(){
+        int total = managerDAO.getManagerNum();
+        return pageDao.getTotalPage(total, PAGE_SIZE);
+    }
+
 }

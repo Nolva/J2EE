@@ -24,9 +24,10 @@ public class ContractDao {
     private static final String SELECT ="SELECT * FROM Contract ORDER BY clientNo";
     private static final String SELECT_BY_PAGE ="SELECT * FROM Contract ORDER BY clientNo LIMIT ?,?";
     private static final String EXIST_Contract = "SELECT COUNT(*) FROM Contract WHERE clientNo=?";
-    private static final String Contract_SPECIES = "SELECT COUNT(*) FROM Contract";
+    private static final String CONTRACT_NUM = "SELECT COUNT(*) FROM Contract";
     private static final String CLIENT_ID_LIST = "SELECT clientId FROM client";
-    private static final String SELLER_ID_LIST = "SELECT employeeId FROM employee WHERE empTitle='销售员'";
+    private static final String SELLER_ID_LIST = "SELECT employeeId FROM employee WHERE empTitle='销售人员'";
+
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -95,4 +96,8 @@ public class ContractDao {
         return jdbcTemplate.queryForList(SELLER_ID_LIST, String.class);
     }
 
+
+    public int getContractNum(){
+        return jdbcTemplate.queryForObject(CONTRACT_NUM, Integer.class);
+    }
 }

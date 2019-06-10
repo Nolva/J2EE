@@ -1,9 +1,7 @@
 package com.test.web;
 
 import com.test.entity.Contract;
-import com.test.entity.Product;
 import com.test.service.ContractService;
-import com.test.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,35 +17,25 @@ import java.util.List;
 public class ContractController {
 
     private ContractService contractService;
-    private PageService pageService;
-    private static int PRODUCT_PAGE_SIZE = 5;
 
     @Autowired
-    public void setProductService(ContractService contractService, PageService pageService) {
+    public void setProductService(ContractService contractService) {
         this.contractService = contractService;
-        this.pageService = pageService;
     }
 
     //显示所有合同
     @RequestMapping("/contracts")
-    public ModelAndView contractList(HttpServletRequest request, String page, Model model){
-        List<Contract> contractList = contractService.ListContract();
-        model.addAttribute("totalCount", contractList.size());
-        //总页数
-        model.addAttribute("totalPage", pageService.getTotalPage(contractList.size()));
-        //页面初始的时候page没有值
-        page = page==null?"1":page;
-        //每页开始的第几条记录
-        contractList = contractService.ListContractByPage(pageService.getStartRow(page),
-                PRODUCT_PAGE_SIZE);
-        List<String> clientIdList = contractService.ListClientId();
-        List<String> sellerIdList = contractService.ListSellerId();
-        //System.out.println(clientIdList.size());
-        model.addAttribute("currentPage", Integer.parseInt(page));
-        model.addAttribute("contractList", contractList);
-        model.addAttribute("clientIdList", clientIdList);
-        model.addAttribute("sellerIdList", sellerIdList);
-        return new ModelAndView("contract");
+    public String contractList(HttpServletRequest request){
+        String page = request.getParameter("page") == null?"1":request.getParameter("page");//获取页码，默认1
+
+        request.setAttribute("totalCount", contractService.getContractNum());
+        request.setAttribute("totalPage", contractService.getTotalPage());
+        request.setAttribute("currentPage", Integer.parseInt(page));
+        request.setAttribute("contractList", contractService.ListContractByPage(Integer.parseInt(page)-1));
+        request.setAttribute("clientIdList", contractService.ListClientId());
+        request.setAttribute("sellerIdList", contractService.ListSellerId());
+
+        return "contract";
     }
     //增加合同
     @RequestMapping("/addContract")

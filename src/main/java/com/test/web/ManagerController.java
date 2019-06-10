@@ -20,7 +20,6 @@ import java.util.List;
 @Controller
 public class ManagerController {
     private ManagerService managerService;
-    private static int MANAGER_PAGE_SIZE = 5;
 
     @Autowired
     public void setUserService(ManagerService managerService) {
@@ -29,40 +28,15 @@ public class ManagerController {
 
     //查看所有管理员
     @RequestMapping("/show")
-    public ModelAndView show(String page, Model model){
-//        for(Manager manager : managerService.ListManager()) {
-//            System.out.println(manager.getManagerId());
-//            System.out.println(manager.getManPassword());
-//        }
-        // 数据量大，不应该使用Session存储
-//        request.getSession().setAttribute("managerList", managerService.ListManager());
-        //request.setAttribute("managerList", managerService.ListManager());
-        //总管理员数
-        List<Manager> managerList = managerService.ListManager();
-        //request.setAttribute("totalCount", managerList.size());
-        model.addAttribute("totalCount", managerList.size());
-        //总页数
-        int totalPage;
-        if(managerList.size()%MANAGER_PAGE_SIZE == 0) {
-            totalPage = managerList.size()/MANAGER_PAGE_SIZE;
-        }else{
-            totalPage = managerList.size()/MANAGER_PAGE_SIZE + 1;
-        }
-        //request.setAttribute("totalPage", pageTimes);
-        model.addAttribute("totalPage", totalPage);
-        //页面初始的时候page没有值
-        if (page == null)
-            page = "1";
-        //每页开始的第几条记录
-        int startRow = (Integer.parseInt(page)-1) * MANAGER_PAGE_SIZE;
-        managerList = managerService.ListManagerByPage(startRow, MANAGER_PAGE_SIZE);
-        //request.setAttribute("currentPage", Integer.parseInt(page));
-        model.addAttribute("currentPage", Integer.parseInt(page));
-        //request.setAttribute("managerList", managerList);
-        model.addAttribute("managerList", managerList);
+    public String show(HttpServletRequest request){
+        String page = request.getParameter("page") == null?"1":request.getParameter("page");//获取页码，默认1
 
-        //return "index";
-        return new ModelAndView("index");
+        request.setAttribute("totalCount", managerService.getManagerNum());
+        request.setAttribute("totalPage", managerService.getTotalPage());
+        request.setAttribute("currentPage", Integer.parseInt(page));
+        request.setAttribute("managerList", managerService.ListManagerByPage(Integer.parseInt(page)-1));
+
+        return "index";
     }
 
     //修改管理员信息

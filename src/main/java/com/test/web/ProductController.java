@@ -1,6 +1,5 @@
 package com.test.web;
 
-import com.test.Page.Page;
 import com.test.entity.Product;
 import com.test.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,34 +18,21 @@ import java.util.List;
 public class ProductController {
 
     private ProductService productService;
-    private static int PRODUCT_PAGE_SIZE = 5;
     
     @Autowired
     public void setProductService(ProductService productService) { this.productService = productService; }
 
     //显示所有产品
     @RequestMapping("/products")
-    public ModelAndView productList(String page, Model model){
-        List<Product> productList = productService.ListProduct();
-        model.addAttribute("totalCount", productList.size());
-        //总页数
-        int totalPage;
-        if(productList.size()%PRODUCT_PAGE_SIZE == 0) {
-            totalPage = productList.size()/PRODUCT_PAGE_SIZE;
-        }else{
-            totalPage = productList.size()/PRODUCT_PAGE_SIZE + 1;
-        }
-        model.addAttribute("totalPage", totalPage);
-        //页面初始的时候page没有值
-        if (page == null)
-            page = "1";
-        //每页开始的第几条记录
-        int startRow = (Integer.parseInt(page)-1) * PRODUCT_PAGE_SIZE;
-        productList = productService.ListProductByPage(startRow, PRODUCT_PAGE_SIZE);
-        model.addAttribute("currentPage", Integer.parseInt(page));
-        model.addAttribute("productList", productList);
+    public String productList(HttpServletRequest request){
+        String page = request.getParameter("page") == null?"1":request.getParameter("page");//获取页码，默认1
 
-        return new ModelAndView("product");
+        request.setAttribute("totalCount", productService.getProductNum());
+        request.setAttribute("totalPage", productService.getTotalPage());
+        request.setAttribute("currentPage", Integer.parseInt(page));
+        request.setAttribute("productList", productService.ListProductByPage(Integer.parseInt(page)-1));
+
+        return "product";
     }
     //增加产品
     @RequestMapping("/addProduct")

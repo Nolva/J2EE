@@ -1,6 +1,7 @@
 package com.test.service;
 
 import com.test.dao.ContractDao;
+import com.test.dao.PageDao;
 import com.test.entity.Contract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +11,14 @@ import java.util.List;
 @Service
 public class ContractService {
     private ContractDao ContractDao;
+    private static int PAGE_SIZE = 5;
+    private PageDao pageDao;
 
     @Autowired
     public void setContractDao(ContractDao ContractDao){ this.ContractDao = ContractDao; }
+    @Autowired
+    public void setPageDao(PageDao pageDao) { this.pageDao = pageDao; }
+
 
     //添加产品
     //1表示ContractId已存在，2表示添加成功，-1表示添加失败
@@ -52,8 +58,8 @@ public class ContractService {
     }
 
     //分页查询
-    public List<Contract> ListContractByPage(int startIndex, int pageSize){
-        return ContractDao.ListContractByPage(startIndex, pageSize);
+    public List<Contract> ListContractByPage(int startIndex){
+        return ContractDao.ListContractByPage(startIndex*PAGE_SIZE, PAGE_SIZE);
     }
 
     //查询全部客户Id
@@ -65,4 +71,14 @@ public class ContractService {
     public List<String> ListSellerId(){
         return ContractDao.ListSellerId();
     }
+
+    public int getContractNum(){
+        return  ContractDao.getContractNum();
+    }
+
+    public int getTotalPage(){
+        int total = ContractDao.getContractNum();
+        return pageDao.getTotalPage(total, PAGE_SIZE);
+    }
+
 }
