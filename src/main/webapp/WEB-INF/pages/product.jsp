@@ -56,7 +56,7 @@
                 <ul class="nav">
                     <li><a href="/index" class=""><i class="lnr lnr-home"></i> <span>首页</span></a></li>
                     <li><a href="client.jsp" class=""><i class="lnr lnr-user"></i> <span>客户管理</span></a></li>
-                    <li><a href="product.jsp" class="active"><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
+                    <li><a href="/product/products" class="active"><i class="lnr lnr-gift"></i> <span>产品管理</span></a></li>
                     <li><a href="employee.jsp" class=""><i class="lnr lnr-phone"></i> <span>员工管理</span></a></li>
                     <li><a href="contact.jsp" class=""><i class="lnr lnr-book"></i> <span>合同管理</span></a></li>
                 </ul>
@@ -70,10 +70,58 @@
             <div class="container-fluid">
                 <div class="panel panel-headline">
                     <div class="panel-heading">
-                        <h3 class="panel-title">管理员管理</h3>
+                        <h3 class="panel-title">产品管理</h3>
                     </div>
                     <div class="panel-body">
-                        修改这里
+                        <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#addChar">添加产品</button>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>产品ID</th>
+                                <th>产品名称</th>
+                                <th>产品型号</th>
+                                <th>产品数量</th>
+                                <th>产品价格</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${prodcutList}" var="product" varStatus="vs">
+                                <%--<s:property value="#vs.index+1"/><br>--%>
+                                <tr role="row" data-productId="${product.productId}" data-productName="${product.productName}"
+                                    data-productModel="${product.productModel}" data-productNum="${product.productNum}"
+                                    data-productPrice="${product.productPrice}">
+                                    <td>${product.productId}</td>
+                                    <td>${product.productName}</td>
+                                    <td>${product.productModel}</td>
+                                    <td>${product.productNum}</td>
+                                    <td>${product.productPrice}</td>
+                                    <td>
+                                        <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeChar">修改</button>
+                                        <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteChar">删除</button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <span>第${currentPage}/${totalPage}页</span>
+                                    <span>总记录${totalCount}条</span>
+                                    <span>
+                                        <c:if test="${currentPage!=1}">
+                                            <a href="${pageContext.request.contextPath}/product/products?page=1">首页</a>
+                                            <a href="${pageContext.request.contextPath}/product/products?page=${currentPage-1}">上一页</a>
+                                        </c:if>
+                                        <c:if test="${currentPage!=totalPage}">
+                                            <a href="${pageContext.request.contextPath }/product/products?page=${currentPage+1}">下一页</a>
+                                            <a href="${pageContext.request.contextPath }/product/products?page=${totalPage}">尾页</a>
+                                        </c:if>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
 
                     </div>
                 </div>
@@ -81,7 +129,150 @@
         </div>
     </div>
     <!-- END MAIN代码添加区域结尾 -->
+    <!--弹出窗口区 -->
+    <!--修改弹出窗口-->
+    <div class="modal fade" id="changeChar" role="dialog" aria-hidden="true" aria-labelledby="gridSystemModalLabel1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel1">修改管理员信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form class="form-horizontal" action="/product/updateProduct" method="post">
+                            <div class="form-group " style="display:none;">
+                                <label for="productId" class="col-xs-3 control-label">产品Id：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="productId" name="productId" }>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="productName" class="col-xs-3 control-label">产品名称：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="productName" name="productName" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="productModel" class="col-xs-3 control-label">产品型号：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="productModel" name="productModel" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="productNum" class="col-xs-3 control-label">产品数量：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="productNum" name="productNum" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="productPrice" class="col-xs-3 control-label">产品价格：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="productPrice" name="productPrice" placeholder="">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+                                <button type="submit" class="btn btn-xs btn-green">修 改</button>
+                            </div>
 
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <!--删除警告窗口-->
+    <div class="modal fade" id="deleteChar" role="dialog" aria-labelledby="gridSystemModalLabel2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel2">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form class="form-horizontal" action="/product/delete" method="post">
+                            <div class="form-group " style="display:none;">
+                                <label for="managerId2" class="col-xs-3 control-label">管理员Id：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="managerId2" name="managerId" >
+                                </div>
+                            </div>
+                            <div class="form-group " >
+                                确定要删除该管理员？删除后不可恢复！
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+                                <button type="submit" class="btn btn-xs btn-green">确 定</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <%--添加管理员弹出窗口--%>
+    <div class="modal fade" id="addChar" role="dialog" aria-hidden="true" aria-labelledby="gridSystemModalLabel3">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel3">添加管理员</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form class="form-horizontal" action="/product/add" method="post">
+                            <div class="form-group " >
+                                <label for="managerId3" class="col-xs-3 control-label">管理员Id：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" required="required" class="form-control input-sm duiqi" id="managerId3" name="managerId" }>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="manPassword3" class="col-xs-3 control-label">管理员密码：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="password" required="required" class="form-control input-sm duiqi" id="manPassword3" name="manPassword" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="manName3" required="required" class="col-xs-3 control-label">管理员姓名：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="manName3" name="manName" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="manTelephone3" class="col-xs-3 control-label">管理员电话：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="manTelephone3" name="manTelephone" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="manEmail3" class="col-xs-3 control-label">管理员邮箱：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="manEmail3" name="manEmail" placeholder="">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+                                <button type="submit" class="btn btn-xs btn-green">添加</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
     <div class="clearfix"></div>
     <footer>
