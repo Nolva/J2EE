@@ -50,6 +50,7 @@ public class ManagerService {
 
     //删除管理员
     public boolean DeleteManager(String managerId){
+        System.out.println(managerId);
         if(isSuperManager(managerId))
             return false;
         int count = managerDAO.DeleteManager(managerId);
