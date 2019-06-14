@@ -68,4 +68,20 @@ public class EmployeeService {
         int total = employeeDAO.getEmployeeNum();
         return pageDao.getTotalPage(total, PAGE_SIZE);
     }
+
+    //查询部门信息
+    public List<Employee> ListDepartment() {
+        return employeeDAO.ListDepartment();
+    }
+
+    //查询职位信息
+    public List<Employee> ListJob(Integer jodId) {
+        try {
+            employeeDAO.ListJob(jodId);
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+        return employeeDAO.ListJob(jodId);
+    }
 }

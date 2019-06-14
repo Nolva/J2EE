@@ -1,15 +1,20 @@
 package com.test.web;
 
+import com.mysql.cj.xdevapi.JsonArray;
 import com.test.entity.Customer;
 import com.test.entity.Employee;
 import com.test.service.EmployeeService;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("employee")
@@ -32,8 +37,25 @@ public class EmployeeController {
         request.setAttribute("totalPage", employeeService.getTotalPage());
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("employeeList", employeeService.ListManagerByPage(Integer.parseInt(page)-1));
-
+        request.setAttribute("departmentList", employeeService.ListDepartment());
+        //request.setAttribute("jobList", employeeService.ListJob());
         return "employee";
+    }
+
+    //查询职业jobList
+    @RequestMapping("/queryJob.shtml")
+    @ResponseBody
+    public void ListJob(Integer jodId, HttpServletResponse response,Model model){
+        try{
+            List<Employee> job = employeeService.ListJob(jodId);
+            JSONArray json = JSONArray.fromObject(job);
+            System.out.println("员工职位");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;character=utf-8");
+            response.getWriter().println(json);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     //删除信息

@@ -1,6 +1,8 @@
 package com.test.dao;
 
 import com.test.entity.Contract;
+import com.test.entity.Customer;
+import com.test.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,13 +22,21 @@ public class ContractDao {
     private static final String DELETE = "DELETE FROM Contract WHERE contractId = ?";
     private static final String UPDATE = "UPDATE Contract SET clientNo=?,employeeId=?,contractName=?,contractContent=?," +
             "contractStartTime=?,contractValidity=? WHERE contractId=?";
-    private static final String GET = "SELECT * FROM Contract WHERE clientNo = ?";
-    private static final String SELECT ="SELECT * FROM Contract ORDER BY clientNo";
+
+    private static final String GET = "SELECT contractId,clientNo,employeeId,contractName," +
+                                      "contractContent,contractStartTime," +
+                                        "contractValidity,cliName from contract,client where clientNo = clientId";
+
+    private static final String SELECT ="SELECT contractId,clientNo,employeeId,contractName," +
+                                         "contractContent,contractStartTime," +
+                                     "contractValidity,cliName from contract,client where clientNo = clientId";
+
     private static final String SELECT_BY_PAGE ="SELECT * FROM Contract ORDER BY clientNo LIMIT ?,?";
+
     private static final String EXIST_Contract = "SELECT COUNT(*) FROM Contract WHERE clientNo=?";
     private static final String CONTRACT_NUM = "SELECT COUNT(*) FROM Contract";
-    private static final String CLIENT_ID_LIST = "SELECT clientId FROM client";
-    private static final String SELLER_ID_LIST = "SELECT employeeId FROM employee WHERE empTitle='销售人员'";
+    private static final String CLIENT_LIST = "SELECT * FROM client";
+    private static final String SELLER_ID_LIST = "SELECT * FROM employee WHERE empTitle='销售人员'";
 
 
     @Autowired
@@ -64,6 +74,7 @@ public class ContractDao {
                 contract.setContractContent(rs.getString("ContractContent"));
                 contract.setContractStartTime(rs.getString("ContractStartTime"));
                 contract.setContractValidity(rs.getString("ContractValidity"));
+                contract.setCliName(rs.getString("cliName"));
                 return contract;
             }
         });
@@ -78,6 +89,7 @@ public class ContractDao {
 
     //当前页的集合
     public List<Contract> ListContractByPage(int startIndex, int pageSize){
+        System.out.println("dao:-------");
         return jdbcTemplate.query(SELECT_BY_PAGE,new Object[]{startIndex,pageSize},new BeanPropertyRowMapper<>(Contract.class));
     }
 
@@ -86,14 +98,17 @@ public class ContractDao {
         return jdbcTemplate.queryForObject(EXIST_Contract,new Object[] {contractId},Integer.class);
     }
 
-    //查询全部客户Id
-    public List<String> ListClientId(){
-        return jdbcTemplate.queryForList(CLIENT_ID_LIST, String.class);
+    //查询全部客户Id,Name
+    public  List<Customer> ListClient(){
+        System.out.println("dao:-------");
+        RowMapper<Customer> rowMapper = new BeanPropertyRowMapper<>(Customer.class);
+        return jdbcTemplate.query(CLIENT_LIST, rowMapper);
     }
 
     //查询全部销售员Id
-    public  List<String> ListSellerId(){
-        return jdbcTemplate.queryForList(SELLER_ID_LIST, String.class);
+    public  List<Employee> ListSeller(){
+        RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
+        return jdbcTemplate.query(CLIENT_LIST, rowMapper);
     }
 
 

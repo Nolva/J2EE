@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 
 <head>
@@ -230,27 +231,31 @@
                                 </div>
                                 <div class="form-group " >
                                     <label class="col-xs-3 control-label">员工部门：</label>
-                                    <div id = "empDepartment" class="col-xs-6 ">
-                                        <select class="form-control input-sm duiqi selectpicker" name="empDepartment">
-                                            <option value="主管部门"  checked="checked">主管部门</option>
+                                    <div class="col-xs-6 ">
+                                        <select class="form-control input-sm duiqi selectpicker" name="empDepartment" id="empDepartment">
+                                            <c:forEach items="${departmentList}" var="empDepartment">
+                                           <%-- <option value="主管部门"  checked="checked">主管部门</option>
                                             <option value="销售部门" >销售部门</option>
                                             <option value="产品部门" >产品部门</option>
-                                            <option value="监管部门" >监管部门</option>
+                                            <option value="监管部门" >监管部门</option>--%>
+                                                 <option value="${empDepartment.departmentName}" >${empDepartment.departmentName}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group " >
                                     <label class="col-xs-3 control-label">员工职位：</label>
-                                    <div  id = "empTitle" class="col-xs-6 ">
-                                        <select class="form-control input-sm duiqi selectpicker" name="empTitle">
-                                            <option value="主管经理"  checked="checked">主管经理</option>
+                                    <div   class="col-xs-6 ">
+                                        <select class="form-control input-sm duiqi selectpicker" name="empTitle" id = "empTitle">
+                                           <%-- <option value="主管经理"  checked="checked">主管经理</option>
                                             <option value="销售经理" >销售经理</option>
                                             <option value="产品经理" >产品经理</option>
                                             <option value="监管经理" >监管经理</option>
                                             <option value="主管人员" >主管人员</option>
                                             <option value="销售人员" >销售人员</option>
                                             <option value="产品人员" >产品人员</option>
-                                            <option value="监管人员" >监管人员</option>
+                                            <option value="监管人员" >监管人员</option>--%>
+                                            <option>===请选择===</option>
                                         </select>
                                     </div>
                                 </div>
@@ -364,27 +369,31 @@
                             </div>
                             <div class="form-group " >
                                 <label class="col-xs-3 control-label">员工部门：</label>
-                                <div id="empDepartment3" class="col-xs-6 ">
-                                    <select class="form-control input-sm duiqi selectpicker" name="empDepartment">
-                                        <option value="主管部门"  checked="checked">主管部门</option>
-                                        <option value="销售部门" >销售部门</option>
-                                        <option value="产品部门" >产品部门</option>
-                                        <option value="监管部门" >监管部门</option>
+                                <div class="col-xs-6 ">
+                                    <select class="form-control input-sm duiqi selectpicker" name="empDepartment" id="empDepartment">
+                                        <c:forEach items="${departmentList}" var="empDepartment">
+                                            <%-- <option value="主管部门"  checked="checked">主管部门</option>
+                                             <option value="销售部门" >销售部门</option>
+                                             <option value="产品部门" >产品部门</option>
+                                             <option value="监管部门" >监管部门</option>--%>
+                                            <option value="${empDepartment.departmentName}" >${empDepartment.departmentName}</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group " >
                                 <label class="col-xs-3 control-label">员工职位：</label>
-                                <div id="empTitle3" class="col-xs-6 ">
-                                    <select class="form-control input-sm duiqi selectpicker" name="empTitle">
-                                        <option value="主管经理"  checked="checked">主管经理</option>
-                                        <option value="销售经理" >销售经理</option>
-                                        <option value="产品经理" >产品经理</option>
-                                        <option value="监管经理" >监管经理</option>
-                                        <option value="主管人员" >主管人员</option>
-                                        <option value="销售人员" >销售人员</option>
-                                        <option value="产品人员" >产品人员</option>
-                                        <option value="监管人员" >监管人员</option>
+                                <div   class="col-xs-6 ">
+                                    <select class="form-control input-sm duiqi selectpicker" name="empTitle" id = "empTitle">
+                                        <%-- <option value="主管经理"  checked="checked">主管经理</option>
+                                         <option value="销售经理" >销售经理</option>
+                                         <option value="产品经理" >产品经理</option>
+                                         <option value="监管经理" >监管经理</option>
+                                         <option value="主管人员" >主管人员</option>
+                                         <option value="销售人员" >销售人员</option>
+                                         <option value="产品人员" >产品人员</option>
+                                         <option value="监管人员" >监管人员</option>--%>
+                                        <option>===请选择===</option>
                                     </select>
                                 </div>
                             </div>
@@ -480,7 +489,7 @@
         var empName = $tr.attr('data-empName');
         // var empSex = $tr.attr('data-empSex');
         var empBirthday = $tr.attr('data-empBirthday');
-        // var empDepartment = $tr.attr('data-empDepartment');
+         //var empDepartment = $tr.attr('data-empDepartment');
         // var empTitle = $tr.attr('data-empTitle');
         var empHireDate = $tr.attr('data-empHireDate');
         var empSalary = $tr.attr('data-empSalary');
@@ -492,7 +501,7 @@
         $(':input[name="empName"]','#changeChar').val(empName);
         // $(':input[name="empSex"]','#changeChar').val(empSex);
         $(':input[name="empBirthday"]','#changeChar').val(empBirthday);
-        // $(':input[name="empDepartment"]','#changeChar').val(empDepartment);
+        //$(':input[name="empDepartment"]','#changeChar').val(empDepartment);
         // $(':input[name="empTitle"]','#changeChar').val(empTitle);
         $(':input[name="empHireDate"]','#changeChar').val(empHireDate);
         $(':input[name="empSalary"]','#changeChar').val(empSalary);
@@ -500,6 +509,8 @@
         $(':input[name="empEmail"]','#changeChar').val([empEmail]);
         $(':input[name="empAddress"]','#changeChar').val([empAddress]);
         // $(':input[name="empEducation"]','#changeChar').val(empEducation);
+
+
 
         var picker1 = $('#empBirthday').datetimepicker({
             //startView: 4,  //起始选择范围
@@ -567,12 +578,24 @@
         $(':input[name="empAddress"]','#addChar').val([empAddress]);
         //$(':input[name="empEducation"]','#addChar').val([empEducation]);
 
-        //var empSexNum = document.getElementsByTagName("empSex");
-        //var empSex = "";//用于存储已被选择的值
-        // for(var i=0;i<empSexNum.length;i++){//遍历数组中对象，查看有没有值被选择
-        //     if(empSexNum[i].checked){//checked表示被选择
-        //         empSex = empSexNum[i];
-        //     }}//把被选中的值给empSex
+        //部门的id
+         var empDepartmentName = $('#empDepartmentName').val();
+         $.ajax({
+             type : "post",
+             url :"/queryJob.shtml" + "?" + empDepartmentName,
+             data :{"jobId" : empDepartmentName},
+             dataType : "json",
+             success :function (data) {
+                 var empTitle = $('#empTitle');
+                 empTitle.empty();
+                 var jobs = eval(data);
+                 $.each(jobs,function (index) {
+                     var jobId = jobs[index].jobId;
+                     var jobName = jobs[index].jobName;
+                     empTitle.append("<option value ='" + jobId +"'>"+jobName+"</option>")
+                 })
+             }
+         });
 
         var picker1 = $('#empBirthday3').datetimepicker({
             //startView: 4,  //起始选择范围

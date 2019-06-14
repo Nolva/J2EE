@@ -1,5 +1,6 @@
 package com.test.dao;
 
+import com.test.entity.Department;
 import com.test.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -21,10 +22,24 @@ public class EmployeeDao {
     private final static String EMPLOYEE_Add_SQL = "INSERT INTO employee values(?,?,?,?,?,?,?,?,?,?,?,?)";
     private final static String EMPLOYEE_NUM = "SELECT COUNT(*) FROM employee";
 
+    private final static String DEPARTMENT = "SELECT * FROM department";
+    private final static String JOB = "SELECT * FROM job where jobId=?";
+
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    //查询所有部门
+    public List<Employee> ListDepartment(){
+        return jdbcTemplate.query(DEPARTMENT,new BeanPropertyRowMapper<>(Employee.class));
+    }
+
+    //查询所有职位
+    public List<Employee> ListJob(Integer jodId){
+        return jdbcTemplate.query(JOB,new Object[]{jodId},new BeanPropertyRowMapper<>(Employee.class));
+    }
+
 
     //查询数据库所有员工信息集合
     public List<Employee> ListEmployee() {
@@ -70,4 +85,6 @@ public class EmployeeDao {
     public int getEmployeeNum(){
         return jdbcTemplate.queryForObject(EMPLOYEE_NUM, Integer.class);
     }
+
+
 }

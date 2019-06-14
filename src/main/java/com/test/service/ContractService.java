@@ -3,6 +3,8 @@ package com.test.service;
 import com.test.dao.ContractDao;
 import com.test.dao.PageDao;
 import com.test.entity.Contract;
+import com.test.entity.Customer;
+import com.test.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +54,7 @@ public class ContractService {
         return count > 0;
     }
 
-    //查询全部
+    //查询全部x
     public List<Contract> ListContract(){
         return ContractDao.ListContract();
     }
@@ -63,13 +65,13 @@ public class ContractService {
     }
 
     //查询全部客户Id
-    public List<String> ListClientId(){
-        return ContractDao.ListClientId();
+    public List<Customer> ListClient(){
+        return ContractDao.ListClient();
     }
 
     //查询全部销售员Id
-    public List<String> ListSellerId(){
-        return ContractDao.ListSellerId();
+    public List<Employee> ListSeller(){
+        return ContractDao.ListSeller();
     }
 
     public int getContractNum(){
