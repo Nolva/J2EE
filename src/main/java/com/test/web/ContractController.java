@@ -27,7 +27,6 @@ public class ContractController {
     @RequestMapping("/contracts")
     public String contractList(HttpServletRequest request){
         String page = request.getParameter("page") == null?"1":request.getParameter("page");//获取页码，默认1
-
         request.setAttribute("totalCount", contractService.getContractNum());
         request.setAttribute("totalPage", contractService.getTotalPage());
         request.setAttribute("currentPage", Integer.parseInt(page));

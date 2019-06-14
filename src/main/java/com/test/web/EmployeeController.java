@@ -55,7 +55,7 @@ public class EmployeeController {
     //修改信息
     @RequestMapping("/change")
     public String change(HttpServletRequest request, Employee employee){
-//        System.out.println("employeecontroller："+employee.getEmployeeId());
+        System.out.println("employeecontroller："+employee.getEmpEducation());
 //        System.out.println("employeecontroller："+employee.getEmpEducation());
         boolean isChange = employeeService.ChangeEmployee(employee);
         if (!isChange) {

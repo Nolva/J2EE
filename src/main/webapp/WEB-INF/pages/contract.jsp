@@ -84,6 +84,7 @@
                                 <th>销售员编号</th>
                                 <th>合同名称</th>
                                 <th>合同内容</th>
+                                <th>合同产品</th>
                                 <th>合同开始日期</th>
                                 <th>合同失效日期</th>
                             </tr>
@@ -103,6 +104,7 @@
                                     text-overflow:ellipsis;">
                                             ${contract.contractContent}
                                     </td>
+                                    <td>${contract.contractProduct}</td>
                                     <td>${contract.contractStartTime}</td>
                                     <td>${contract.contractValidity}</td>
                                     <td>

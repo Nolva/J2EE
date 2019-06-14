@@ -16,7 +16,7 @@ public class ContractDao {
     private JdbcTemplate jdbcTemplate;
 
     private static final String INSERT = "INSERT INTO Contract (contractId,clientNo,employeeId,contractName," +
-            "contractContent,contractStartTime,contractValidity) VALUES (?,?,?,?,?,?,?)";
+            "contractContent,contractProduct,contractStartTime,contractValidity) VALUES (?,?,?,?,?,?,?,?)";
     private static final String DELETE = "DELETE FROM Contract WHERE contractId = ?";
     private static final String UPDATE = "UPDATE Contract SET clientNo=?,employeeId=?,contractName=?,contractContent=?," +
             "contractStartTime=?,contractValidity=? WHERE contractId=?";

@@ -291,9 +291,9 @@
                                 </div>
                             </div>
                                 <div class="form-group " >
-                                    <label  class="col-xs-3 control-label">员工学历：</label>
+                                    <label  class="col-xs-3  control-label">员工学历：</label>
                                     <div id = "empEducation" class="col-xs-6 ">
-                                        <select class="form-control input-sm duiqi selectpicker" name="empEducation">
+                                        <select class="form-control input-sm duiqi selectpicker"  name="empEducation">
                                             <option value="博士" >博士</option>
                                             <option value="硕士研究生" >硕士研究生</option>
                                             <option value="本科" >本科</option>
