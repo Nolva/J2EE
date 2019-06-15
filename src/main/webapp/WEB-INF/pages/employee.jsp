@@ -509,6 +509,7 @@
         $(':input[name="empAddress"]','#changeChar').val([empAddress]);
         // $(':input[name="empEducation"]','#changeChar').val(empEducation);
 
+        //根据部门名称ajax获取职位
         var department = empDepartment;
         //console.log(department);
         $.ajax({
@@ -526,21 +527,25 @@
                 $.each(jobs,function(index , item){
                     //console.log(jobs[index])
                     var jobName = jobs[index].jobName;
+                    //如果是当前职位，进行选中
                     if (jobName == empTitle)
                         empTitleSelect.append("<option value=\"" +jobName + "\" selected=\"selected\">" +jobName+"</option>");
                     else
                         empTitleSelect.append("<option value=\"" +jobName + "\">" +jobName+"</option>");
                 });
+                //刷新select
                 empTitleSelect.selectpicker('render');
                 empTitleSelect.selectpicker('refresh');
             }
 
         });
 
+        //对部门名称和学历和用户一致的进行选中
         $('select option[value="'+empDepartment+'"]','#changeChar').attr("selected",true);
         //$('select option[value="'+empEducation+'"]','#changeChar').attr("selected", true);
         $('select option[value="'+empEducation+'"]','#changeChar').attr("selected",true);
 
+        //进行select刷新
         $('select[name="empDepartment"]','#changeChar').selectpicker('render');
         $('select[name="empDepartment"]','#changeChar').selectpicker('refresh');
         $('select[name="empEducation"]','#changeChar').selectpicker('render');
