@@ -1,8 +1,10 @@
 package com.test.web;
 
 import com.test.entity.Customer;
+import com.test.entity.Education;
 import com.test.entity.Employee;
 import com.test.entity.Job;
+import com.test.service.EducationService;
 import com.test.service.EmployeeService;
 import com.test.service.JobService;
 import net.sf.json.JSONArray;
@@ -24,6 +26,7 @@ public class EmployeeController {
 
     private EmployeeService employeeService;
     private JobService jobService;
+    private EducationService educationService;
 
     @Autowired
     public void setEmployeeService(EmployeeService employeeService) {
@@ -33,6 +36,11 @@ public class EmployeeController {
     @Autowired
     public void setJobService(JobService jobService){
         this.jobService = jobService;
+    }
+
+    @Autowired
+    public void setEducationService(EducationService educationService){
+        this.educationService = educationService;
     }
 
     //显示所有client信息页面
@@ -45,7 +53,7 @@ public class EmployeeController {
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("employeeList", employeeService.ListManagerByPage(Integer.parseInt(page)-1));
         request.setAttribute("departmentList", employeeService.ListDepartment());
-        //request.setAttribute("jobList", employeeService.ListJob());
+        request.setAttribute("educationList", educationService.ListEducation());
         return "employee";
     }
 
@@ -56,6 +64,22 @@ public class EmployeeController {
         try{
             List<Job> job = jobService.ListJob(department);
             JSONArray json = JSONArray.fromObject(job);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;character=utf-8");
+            response.getWriter().println(json);
+        }catch(IOException e){
+            System.out.println("fail to ajax");
+        }
+    }
+
+    //查询学历eduList
+    @RequestMapping("/queryEducation.shtml")
+    @ResponseBody
+    public void queryEdu(HttpServletResponse response){
+        try{
+            List<Education> education = educationService.ListEducation();
+            System.out.println("controller");
+            JSONArray json = JSONArray.fromObject(education);
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html;character=utf-8");
             response.getWriter().println(json);
