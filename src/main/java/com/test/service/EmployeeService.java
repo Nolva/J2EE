@@ -33,7 +33,6 @@ public class EmployeeService {
 
     //修改信息
     public boolean ChangeEmployee(Employee employee){
-        System.out.println("Service:"+employee.getEmployeeId());
         try {
             employeeDAO.ChangeEmployee(employee);
         }catch (Exception e){
@@ -68,4 +67,10 @@ public class EmployeeService {
         int total = employeeDAO.getEmployeeNum();
         return pageDao.getTotalPage(total, PAGE_SIZE);
     }
+
+    //查询部门信息
+    public List<Employee> ListDepartment() {
+        return employeeDAO.ListDepartment();
+    }
+
 }

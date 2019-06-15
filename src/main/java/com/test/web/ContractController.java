@@ -31,9 +31,9 @@ public class ContractController {
         request.setAttribute("totalPage", contractService.getTotalPage());
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("contractList", contractService.ListContractByPage(Integer.parseInt(page)-1));
-        request.setAttribute("clientIdList", contractService.ListClientId());
-        request.setAttribute("sellerIdList", contractService.ListSellerId());
-
+        request.setAttribute("clientList", contractService.ListClient());
+        request.setAttribute("sellerList", contractService.ListSeller());
+        System.out.println("controller:-------");
         return "contract";
     }
     //增加合同

@@ -87,24 +87,23 @@
                                 <th>合同产品</th>
                                 <th>合同开始日期</th>
                                 <th>合同失效日期</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach items="${contractList}" var="contract" varStatus="vs">
                                 <%--<s:property value="#vs.index+1"/><br>--%>
-                                <tr role="row" data-contractId="${contract.contractId}" data-clientNo="${contract.clientNo}"
+                                <tr role="row" data-contractId="${contract.contractId}"
+                                    <%--data-cliName="${contract.cliName}"--%> data-clientNo="${contract.clientNo}"
                                     data-employeeId="${contract.employeeId}" data-contractName="${contract.contractName}"
                                     data-contractContent="${contract.contractContent}"
                                     data-contractStartTime="${contract.contractStartTime}" data-contractValidity="${contract.contractValidity}">
                                     <td>${contract.contractId}</td>
-                                    <td>${contract.clientNo}</td>
+                                    <td>${contract.clientNo}号</td>
                                     <td>${contract.employeeId}</td>
                                     <td>${contract.contractName}</td>
                                     <td style="overflow:hidden;white-space:nowrap;
-                                    text-overflow:ellipsis;">
-                                            ${contract.contractContent}
-                                    </td>
-                                    <td>${contract.contractProduct}</td>
+                                    text-overflow:ellipsis;">${contract.contractContent}</td>
                                     <td>${contract.contractStartTime}</td>
                                     <td>${contract.contractValidity}</td>
                                     <td>
@@ -159,21 +158,21 @@
                                 </div>
                             </div>
                             <div class="form-group ">
-                                <label  class="col-xs-3 control-label">客户编号：</label>
+                                <label  class="col-xs-3 control-label">客户姓名：</label>
                                     <div class="col-xs-6 ">
                                         <select class="form-control input-sm duiqi selectpicker" name="clientNo" >
-                                           <c:forEach items="${clientIdList}" var="clientId">
-                                               <option value="${clientId}">${clientId}</option>
+                                           <c:forEach items="${clientList}" var="client">
+                                               <option value="${clientId}">${client.cliName}(${client.clientId})</option>
                                            </c:forEach>
                                         </select>
                                     </div>
                             </div>
                             <div class="form-group ">
-                                <label  class="col-xs-3 control-label">销售员编号：</label>
+                                <label  class="col-xs-3 control-label">销售员姓名：</label>
                                 <div class="col-xs-6 ">
                                     <select class="form-control input-sm duiqi selectpicker" name="employeeId" >
-                                        <c:forEach items="${sellerIdList}" var="sellerId">
-                                            <option value="${sellerId}">${sellerId}</option>
+                                        <c:forEach items="${sellerList}" var="seller">
+                                            <option value="${sellerId}">${seller.empName}--(${seller.employeeId})</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -268,7 +267,7 @@
     </div>
 
 
-
+    <!--添加警告窗口-->
     <div class="modal fade" id="addChar" role="dialog" aria-hidden="true" aria-labelledby="gridSystemModalLabel3">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -286,21 +285,21 @@
                                 </div>
                             </div>
                             <div class="form-group ">
-                                <label  class="col-xs-3 control-label">客户编号：</label>
+                                <label  class="col-xs-3 control-label">客户姓名：</label>
                                 <div class="col-xs-6 ">
                                     <select class="form-control input-sm duiqi selectpicker" name="clientNo" >
-                                        <c:forEach items="${clientIdList}" var="clientId">
-                                            <option value="${clientId}">${clientId}</option>
+                                        <c:forEach items="${clientList}" var="client">
+                                            <option value="${clientId}">${client.cliName}(${client.clientId})</option>
                                         </c:forEach>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group ">
-                                <label  class="col-xs-3 control-label">销售员编号：</label>
+                                <label  class="col-xs-3 control-label">销售员姓名：</label>
                                 <div class="col-xs-6 ">
                                     <select class="form-control input-sm duiqi selectpicker" name="employeeId" >
-                                        <c:forEach items="${sellerIdList}" var="sellerId">
-                                            <option value="${sellerId}">${sellerId}</option>
+                                        <c:forEach items="${sellerList}" var="seller">
+                                            <option value="${sellerId}">${seller.empName}--(${seller.employeeId})</option>
                                         </c:forEach>
                                     </select>
                                 </div>

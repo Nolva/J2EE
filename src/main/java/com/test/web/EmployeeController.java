@@ -2,14 +2,20 @@ package com.test.web;
 
 import com.test.entity.Customer;
 import com.test.entity.Employee;
+import com.test.entity.Job;
 import com.test.service.EmployeeService;
+import com.test.service.JobService;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("employee")
@@ -17,10 +23,16 @@ import java.util.List;
 public class EmployeeController {
 
     private EmployeeService employeeService;
+    private JobService jobService;
 
     @Autowired
     public void setEmployeeService(EmployeeService employeeService) {
         this.employeeService = employeeService;
+    }
+
+    @Autowired
+    public void setJobService(JobService jobService){
+        this.jobService = jobService;
     }
 
     //显示所有client信息页面
@@ -32,8 +44,24 @@ public class EmployeeController {
         request.setAttribute("totalPage", employeeService.getTotalPage());
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("employeeList", employeeService.ListManagerByPage(Integer.parseInt(page)-1));
-
+        request.setAttribute("departmentList", employeeService.ListDepartment());
+        //request.setAttribute("jobList", employeeService.ListJob());
         return "employee";
+    }
+
+    //查询职业jobList
+    @RequestMapping("/queryJob.shtml")
+    @ResponseBody
+    public void queryJob(String department, HttpServletResponse response,Model model){
+        try{
+            List<Job> job = jobService.ListJob(department);
+            JSONArray json = JSONArray.fromObject(job);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;character=utf-8");
+            response.getWriter().println(json);
+        }catch(IOException e){
+            System.out.println("fail to ajax");
+        }
     }
 
     //删除信息
@@ -55,7 +83,6 @@ public class EmployeeController {
     //修改信息
     @RequestMapping("/change")
     public String change(HttpServletRequest request, Employee employee){
-        System.out.println("employeecontroller："+employee.getEmpEducation());
 //        System.out.println("employeecontroller："+employee.getEmpEducation());
         boolean isChange = employeeService.ChangeEmployee(employee);
         if (!isChange) {

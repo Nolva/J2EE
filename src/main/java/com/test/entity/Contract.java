@@ -9,6 +9,16 @@ public class Contract {
     private String contractContent;
     private String contractStartTime;
     private String contractValidity;
+    private String cliName;
+
+    public String getCliName() {
+        return cliName;
+    }
+
+    public void setCliName(String cliName) {
+        this.cliName = cliName;
+    }
+
 
     public Integer getContractId() {
         return contractId;
