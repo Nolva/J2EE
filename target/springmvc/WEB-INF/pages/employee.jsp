@@ -234,7 +234,6 @@
                                     <div class="col-xs-6 ">
                                         <select class="form-control input-sm duiqi selectpicker" name="empDepartment"
                                                 id="empDepartment" onchange="selectJob()">
-                                            <option>---请选择---</option>
                                             <c:forEach items="${departmentList}" var="empDepartment">
                                            <%-- <option value="主管部门"  checked="checked">主管部门</option>
                                             <option value="销售部门" >销售部门</option>
@@ -299,8 +298,8 @@
                                 <div class="form-group " >
                                     <label  class="col-xs-3  control-label">员工学历：</label>
                                     <div  id = "empEducation" class="col-xs-6 ">
-                                        <select class="form-control input-sm duiqi selectpicker"  name="empEducation">
-                                            <option>---请选择---</option>
+                                        <select class="form-control input-sm duiqi selectpicker"
+                                                name="empEducation" >
                                             <c:forEach items="${educationList}" var="empEducation">
                                                 <option value ="${empEducation.eduName}">${empEducation.eduName}</option>
                                             </c:forEach>
@@ -394,7 +393,6 @@
                                          <option value="销售人员" >销售人员</option>
                                          <option value="产品人员" >产品人员</option>
                                          <option value="监管人员" >监管人员</option>--%>
-                                        <option>===请选择===</option>
                                     </select>
                                 </div>
                             </div>
@@ -490,14 +488,14 @@
         var empName = $tr.attr('data-empName');
         // var empSex = $tr.attr('data-empSex');
         var empBirthday = $tr.attr('data-empBirthday');
-         //var empDepartment = $tr.attr('data-empDepartment');
-        // var empTitle = $tr.attr('data-empTitle');
+        var empDepartment = $tr.attr('data-empDepartment');
+        var empTitle = $tr.attr('data-empTitle');
         var empHireDate = $tr.attr('data-empHireDate');
         var empSalary = $tr.attr('data-empSalary');
         var empTelephone = $tr.attr('data-empTelephone');
         var empEmail = $tr.attr('data-empEmail');
         var empAddress = $tr.attr('data-empAddress');
-        // var empEducation = $tr.attr('data-empEducation');
+        var empEducation = $tr.attr('data-empEducation');
         $(':input[name="employeeId"]','#changeChar').val(employeeId);
         $(':input[name="empName"]','#changeChar').val(empName);
         // $(':input[name="empSex"]','#changeChar').val(empSex);
@@ -510,6 +508,44 @@
         $(':input[name="empEmail"]','#changeChar').val([empEmail]);
         $(':input[name="empAddress"]','#changeChar').val([empAddress]);
         // $(':input[name="empEducation"]','#changeChar').val(empEducation);
+
+        var department = empDepartment;
+        //console.log(department);
+        $.ajax({
+            type: "post" ,
+            url: "/employee/queryJob.shtml"+"?"+department,
+            data: {"department":department},
+            dataType: "json",
+            success : function (data){
+                //城市下拉菜单id
+                var empTitleSelect = $('select[name="empTitle"]','#changeChar');
+                //清空菜单
+                empTitleSelect.empty();
+                //json格式的城市对象数组
+                var jobs = eval(data);
+                $.each(jobs,function(index , item){
+                    //console.log(jobs[index])
+                    var jobName = jobs[index].jobName;
+                    if (jobName == empTitle)
+                        empTitleSelect.append("<option value=\"" +jobName + "\" selected=\"selected\">" +jobName+"</option>");
+                    else
+                        empTitleSelect.append("<option value=\"" +jobName + "\">" +jobName+"</option>");
+                });
+                empTitleSelect.selectpicker('render');
+                empTitleSelect.selectpicker('refresh');
+            }
+
+        });
+        
+        $('select option[value="'+empDepartment+'"]','#changeChar').attr("selected",true);
+        //$('select option[value="'+empEducation+'"]','#changeChar').attr("selected", true);
+        $('select option[value="'+empEducation+'"]','#changeChar').attr("selected",true);
+
+        $('select[name="empDepartment"]','#changeChar').selectpicker('render');
+        $('select[name="empDepartment"]','#changeChar').selectpicker('refresh');
+        $('select[name="empEducation"]','#changeChar').selectpicker('render');
+        $('select[name="empEducation"]','#changeChar').selectpicker('refresh');
+
 
         var picker1 = $('#empBirthday').datetimepicker({
             //startView: 4,  //起始选择范围
@@ -575,6 +611,8 @@
         $(':input[name="empEmail"]','#addChar').val([empEmail]);
         $(':input[name="empAddress"]','#addChar').val([empAddress]);
         //$(':input[name="empEducation"]','#addChar').val([empEducation]);
+
+
 
         var picker1 = $('#empBirthday3').datetimepicker({
             //startView: 4,  //起始选择范围
