@@ -2,9 +2,11 @@ package com.test.service;
 
 import com.test.dao.ContractDao;
 import com.test.dao.PageDao;
+import com.test.dao.ProductDao;
 import com.test.entity.Contract;
 import com.test.entity.Customer;
 import com.test.entity.Employee;
+import com.test.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,15 @@ import java.util.List;
 @Service
 public class ContractService {
     private ContractDao ContractDao;
+    private ProductDao productDao;
+
     private static int PAGE_SIZE = 5;
     private PageDao pageDao;
 
     @Autowired
     public void setContractDao(ContractDao ContractDao){ this.ContractDao = ContractDao; }
+    @Autowired
+    public void setProductDao(ProductDao productDao){this.productDao = productDao;}
     @Autowired
     public void setPageDao(PageDao pageDao) { this.pageDao = pageDao; }
 
@@ -64,14 +70,19 @@ public class ContractService {
         return ContractDao.ListContractByPage(startIndex*PAGE_SIZE, PAGE_SIZE);
     }
 
-    //查询全部客户Id
+    //查询全部客户
     public List<Customer> ListClient(){
         return ContractDao.ListClient();
     }
 
-    //查询全部销售员Id
+    //查询全部销售员
     public List<Employee> ListSeller(){
         return ContractDao.ListSeller();
+    }
+
+    //查询所有产品
+    public List<Product> ListProduct(){
+        return productDao.ListProduct();
     }
 
     public int getContractNum(){

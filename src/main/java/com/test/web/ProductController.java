@@ -1,6 +1,7 @@
 package com.test.web;
 
 import com.test.entity.Product;
+import com.test.service.CategoryService;
 import com.test.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,14 @@ import java.util.List;
 public class ProductController {
 
     private ProductService productService;
+    private CategoryService categoryService;
     
     @Autowired
     public void setProductService(ProductService productService) { this.productService = productService; }
+    @Autowired
+    public void setCategoryService(CategoryService categoryService){
+        this.categoryService = categoryService;
+    }
 
     //显示所有产品
     @RequestMapping("/products")
@@ -31,7 +37,7 @@ public class ProductController {
         request.setAttribute("totalPage", productService.getTotalPage());
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("productList", productService.ListProductByPage(Integer.parseInt(page)-1));
-
+        request.setAttribute("categoryList", categoryService.ListCategory());
         return "product";
     }
     //增加产品
@@ -43,7 +49,7 @@ public class ProductController {
             if (isAdd == -1){
                 request.setAttribute("productInfo", "添加产品失败！");
             }else if (isAdd == 1){
-                request.setAttribute("productInfo", "产品ID已存在，添加失败！");
+                request.setAttribute("productInfo", "产品已存在，添加失败！");
             }else{
                 request.setAttribute("productInfo", "添加产品成功！");
             }
@@ -77,6 +83,7 @@ public class ProductController {
             if (!isUpdate) {
                 request.setAttribute("productInfo", "无法修改该产品！");
             } else {
+
                 request.setAttribute("productInfo", "修改产品成功！");
             }
             return "productMessage";

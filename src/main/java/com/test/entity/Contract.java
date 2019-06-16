@@ -7,18 +7,9 @@ public class Contract {
     private String employeeId;
     private String contractName;
     private String contractContent;
+    private String contractProduct;
     private String contractStartTime;
     private String contractValidity;
-    private String cliName;
-
-    public String getCliName() {
-        return cliName;
-    }
-
-    public void setCliName(String cliName) {
-        this.cliName = cliName;
-    }
-
 
     public Integer getContractId() {
         return contractId;
@@ -48,8 +39,8 @@ public class Contract {
         return contractName;
     }
 
-    public void setContractName(String contractNamel) {
-        this.contractName = contractNamel;
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
     }
 
     public String getContractContent() {
@@ -58,6 +49,14 @@ public class Contract {
 
     public void setContractContent(String contractContent) {
         this.contractContent = contractContent;
+    }
+
+    public String getContractProduct() {
+        return contractProduct;
+    }
+
+    public void setContractProduct(String contractProduct) {
+        this.contractProduct = contractProduct;
     }
 
     public String getContractStartTime() {
@@ -75,4 +74,6 @@ public class Contract {
     public void setContractValidity(String contractValidity) {
         this.contractValidity = contractValidity;
     }
+
+
 }

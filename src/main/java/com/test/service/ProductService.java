@@ -24,6 +24,10 @@ public class ProductService {
     //添加产品
     //1表示productId已存在，2表示添加成功，-1表示添加失败
     public int addProduct(Product product){
+        if (productDao.searchProductName(product.getProductName())>0){
+            if (productDao.searchProductModel(product.getProductModel(), product.getProductId())>0)
+                return 1;
+        }
         int existId = productDao.ExistProductId(product.getProductId());
         if (existId > 0)
             return 1;
@@ -35,6 +39,10 @@ public class ProductService {
 
     //修改
     public boolean updateProductId(Product product){
+        if (productDao.searchProductName(product.getProductName())>0){
+            if (productDao.searchProductModel(product.getProductModel(), product.getProductId())>0)
+                return false;
+        }
         try{
             productDao.updateProduct(product);
         }catch (Exception e){

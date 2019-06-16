@@ -80,8 +80,8 @@
                             <thead>
                             <tr>
                                 <th>合同ID</th>
-                                <th>客户编号</th>
-                                <th>销售员编号</th>
+                                <th>客户姓名</th>
+                                <th>销售员姓名</th>
                                 <th>合同名称</th>
                                 <th>合同内容</th>
                                 <th>合同产品</th>
@@ -96,14 +96,15 @@
                                 <tr role="row" data-contractId="${contract.contractId}"
                                     <%--data-cliName="${contract.cliName}"--%> data-clientNo="${contract.clientNo}"
                                     data-employeeId="${contract.employeeId}" data-contractName="${contract.contractName}"
-                                    data-contractContent="${contract.contractContent}"
+                                    data-contractContent="${contract.contractContent}" data-contractProduct="${contract.contractProduct}"
                                     data-contractStartTime="${contract.contractStartTime}" data-contractValidity="${contract.contractValidity}">
                                     <td>${contract.contractId}</td>
-                                    <td>${contract.clientNo}号</td>
+                                    <td>${contract.clientNo}</td>
                                     <td>${contract.employeeId}</td>
                                     <td>${contract.contractName}</td>
                                     <td style="overflow:hidden;white-space:nowrap;
                                     text-overflow:ellipsis;">${contract.contractContent}</td>
+                                    <td>${contract.contractProduct}</td>
                                     <td>${contract.contractStartTime}</td>
                                     <td>${contract.contractValidity}</td>
                                     <td>
@@ -121,12 +122,12 @@
                                     <span>总记录${totalCount}条</span>
                                     <span>
                                         <c:if test="${currentPage!=1}">
-                                            <a href="${pageContext.request.contextPath}/administrator/show?page=1">首页</a>
-                                            <a href="${pageContext.request.contextPath}/administrator/show?page=${currentPage-1}">上一页</a>
+                                            <a href="${pageContext.request.contextPath}/contract/contracts?page=1">首页</a>
+                                            <a href="${pageContext.request.contextPath}/contract/contracts?page=${currentPage-1}">上一页</a>
                                         </c:if>
                                         <c:if test="${currentPage!=totalPage}">
-                                            <a href="${pageContext.request.contextPath }/administrator/show?page=${currentPage+1}">下一页</a>
-                                            <a href="${pageContext.request.contextPath }/administrator/show?page=${totalPage}">尾页</a>
+                                            <a href="${pageContext.request.contextPath }/contract/contracts?page=${currentPage+1}">下一页</a>
+                                            <a href="${pageContext.request.contextPath }/contract/contracts?page=${totalPage}">尾页</a>
                                         </c:if>
                                     </span>
                                 </td>
@@ -162,7 +163,7 @@
                                     <div class="col-xs-6 ">
                                         <select class="form-control input-sm duiqi selectpicker" name="clientNo" >
                                            <c:forEach items="${clientList}" var="client">
-                                               <option value="${clientId}">${client.cliName}(${client.clientId})</option>
+                                               <option value="${client.cliName}（${client.clientId}）">${client.cliName}(客户编号：${client.clientId})</option>
                                            </c:forEach>
                                         </select>
                                     </div>
@@ -172,7 +173,7 @@
                                 <div class="col-xs-6 ">
                                     <select class="form-control input-sm duiqi selectpicker" name="employeeId" >
                                         <c:forEach items="${sellerList}" var="seller">
-                                            <option value="${sellerId}">${seller.empName}--(${seller.employeeId})</option>
+                                            <option value="${seller.empName}（${seller.employeeId}）">${seller.empName}(销售员编号：${seller.employeeId})</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -190,6 +191,18 @@
                                                 rows="3"
                                                 id="contractContent" name="contractContent" placeholder="">
                                     </textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label  class="col-xs-3 control-label">合同产品：</label>
+                                <div class="col-xs-6 ">
+                                    <select required="required" class="form-control input-sm duiqi selectpicker" multiple name="contractProduct" >
+                                        <c:forEach items="${productList}" var="product">
+                                            <option name="${product.productModel}${product.productName}"
+                                                    value="${product.productModel}${product.productName},${product.productId}">${product.productModel}${product.productName}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
 
@@ -267,7 +280,7 @@
     </div>
 
 
-    <!--添加警告窗口-->
+    <!--添加窗口-->
     <div class="modal fade" id="addChar" role="dialog" aria-hidden="true" aria-labelledby="gridSystemModalLabel3">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -289,7 +302,7 @@
                                 <div class="col-xs-6 ">
                                     <select class="form-control input-sm duiqi selectpicker" name="clientNo" >
                                         <c:forEach items="${clientList}" var="client">
-                                            <option value="${clientId}">${client.cliName}(${client.clientId})</option>
+                                            <option value="${client.cliName}（${client.clientId}）">${client.cliName}(客户编号：${client.clientId})</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -299,7 +312,7 @@
                                 <div class="col-xs-6 ">
                                     <select class="form-control input-sm duiqi selectpicker" name="employeeId" >
                                         <c:forEach items="${sellerList}" var="seller">
-                                            <option value="${sellerId}">${seller.empName}--(${seller.employeeId})</option>
+                                            <option value="${seller.empName}（${seller.employeeId}）">${seller.empName}(销售员编号：${seller.employeeId})</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -314,6 +327,18 @@
                                 <label for="contractContent3" class="col-xs-3 control-label">合同内容：</label>
                                 <div class="col-xs-6 ">
                                     <input type="text" required="required" class="form-control input-sm duiqi" id="contractContent3" name="contractContent" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label  class="col-xs-3 control-label">合同产品：</label>
+                                <div class="col-xs-6 ">
+                                    <select required="required" class="form-control input-sm duiqi selectpicker" multiple name="contractProduct" >
+                                        <c:forEach items="${productList}" var="product">
+                                            <option name="${product.productModel}${product.productName}"
+                                                    value="${product.productModel}${product.productName},${product.productId}">${product.productModel}${product.productName}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
 
@@ -380,7 +405,6 @@
 <script>
     // 编辑对话框
     $('#changeChar').on('show.bs.modal',function(event){
-        console.log("Sdsa");
         var source = event.relatedTarget;
         var $tr = $(source).closest('tr');
         var contractId = $tr.attr('data-contractId');
@@ -388,6 +412,7 @@
         //var employeeId = $tr.attr('data-employeeId');
         var contractName = $tr.attr('data-contractName');
         var contractContent = $tr.attr('data-contractContent');
+        var contractProduct = $tr.attr('data-contractProduct');
         var contractStartTime = $tr.attr('data-contractStartTime');
         var contractValidity = $tr.attr('data-contractValidity');
 
@@ -400,6 +425,20 @@
         $(':input[name="contractStartTime"]','#changeChar').val([contractStartTime]);
         $(':input[name="contractValidity"]','#changeChar').val([contractValidity]);
 
+
+        $('select[name="contractProduct"]>option','#changeChar').each(function() {
+                $(this).attr("selected",false);
+        });
+
+        //分割产品
+        var contractProductList = contractProduct.split(",");
+        for (var i = 0; i < contractProductList.length; i++){
+            $('select option[name="'+contractProductList[i]+'"]','#changeChar').prop("selected",true);
+        }
+        //进行select刷新
+        $('select[name="contractProduct"]','#changeChar').selectpicker('render');
+        $('select[name="contractProduct"]','#changeChar').selectpicker('refresh');
+        
 
         var picker1 = $('#datetimepicker1').datetimepicker({
             //startView: 4,  //起始选择范围

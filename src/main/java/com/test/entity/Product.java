@@ -8,6 +8,9 @@ public class Product implements Serializable {
     private String productModel;//产品模型
     private Integer productNum;//产品数量
     private Double productPrice;//产品价格
+    private String productCategory;
+    private String productContract;
+
     public Product(){}
     public Product(String productId, String productName, String productModel, Integer productNum, Double productPrice) {
         this.productId = productId;
@@ -39,6 +42,22 @@ public class Product implements Serializable {
     }
     public double getProductPrice() {  return productPrice; }
     public void setProductPrice(double productPrice) { this.productPrice = productPrice;}
+
+    public String getProductCategory() {
+        return productCategory;
+    }
+
+    public void setProductCategory(String productCategory) {
+        this.productCategory = productCategory;
+    }
+
+    public String getProductContract() {
+        return productContract;
+    }
+
+    public void setProductContract(String productContract) {
+        this.productContract = productContract;
+    }
 
     @Override
     public String toString() {

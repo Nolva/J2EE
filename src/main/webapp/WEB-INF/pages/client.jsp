@@ -307,16 +307,6 @@
         $(':input[name="cliAddress"]','#changeChar').val([cliAddress]);
     });
     $('#addChar').on('show.bs.modal',function(event){
-        var clientId = <%=request.getParameter("clientId")%>;
-        var cliName = <%=request.getParameter("cliName")%>;
-        var cliTelephone = <%=request.getParameter("cliTelephone")%>;
-        var cliEmail = <%=request.getParameter("cliEmail")%>;
-        var cliAddress = <%=request.getParameter("cliAddress")%>;
-        $(':input[name="clientId"]','#addChar').val(clientId);
-        $(':input[name="cliName"]','#addChar').val(cliName);
-        $(':input[name="cliTelephone"]','#addChar').val(cliTelephone);
-        $(':input[name="cliEmail"]','#addChar').val([cliEmail]);
-        $(':input[name="cliAddress"]','#addChar').val([cliAddress]);
     });
     $('#deleteChar').on('show.bs.modal',function(event){
         var source = event.relatedTarget;

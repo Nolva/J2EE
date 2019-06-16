@@ -432,13 +432,13 @@
                                 </div>
                             </div>
                             <div class="form-group " >
-                                <label  class="col-xs-3 control-label">员工学历：</label>
-                                <div id="empEducation3" class="col-xs-6 ">
-                                    <select class="form-control input-sm duiqi selectpicker" name="empEducation">
-                                    <option value="博士" >博士</option>
-                                    <option value="硕士研究生" >硕士研究生</option>
-                                    <option value="本科" >本科</option>
-                                    <option value="专科" >专科</option>
+                                <label  class="col-xs-3  control-label">员工学历：</label>
+                                <div  id = "empEducation3" class="col-xs-6 ">
+                                    <select class="form-control input-sm duiqi selectpicker"
+                                            name="empEducation" >
+                                        <c:forEach items="${educationList}" var="empEducation">
+                                            <option value ="${empEducation.eduName}">${empEducation.eduName}</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                             </div>
@@ -592,31 +592,33 @@
         });
     });
     $('#addChar').on('show.bs.modal',function(event){
-        var emplooyeeId = <%=request.getParameter("emplooyeeId")%>;
-        var empName = <%=request.getParameter("empName")%>;
-        //var empSex = <%=request.getParameter("empSex")%>;
-        var empBirthday = <%=request.getParameter("empBirthday")%>;
-        //var empDepartment = <%=request.getParameter("empDepartment")%>;
-        //var empTitle = <%=request.getParameter("empTitle")%>;
-        var empHireDate = <%=request.getParameter("empHireDate")%>;
-        var empSalary = <%=request.getParameter("empSalary")%>;
-        var empTelephone = <%=request.getParameter("empTelephone")%>;
-        var empEmail = <%=request.getParameter("empEmail")%>;
-        var empAddress = <%=request.getParameter("empAddress")%>;
-        //var empEducation = <%=request.getParameter("empEducation")%>;
-        $(':input[name="emplooyeeId"]','#addChar').val(emplooyeeId);
-        $(':input[name="empName"]','#addChar').val(empName);
-        //$(':input[name="empSex"]','#addChar').val(empSex);
-        $(':input[name="empBirthday"]','#addChar').val(empBirthday);
-        //$(':input[name="empDepartment"]','#addChar').val(empDepartment);
-        //$(':input[name="empTitle"]','#addChar').val(empTitle);
-        $(':input[name="empHireDate"]','#addChar').val(empHireDate);
-        $(':input[name="empSalary"]','#addChar').val(empSalary);
-        $(':input[name="empTelephone"]','#addChar').val(empTelephone);
-        $(':input[name="empEmail"]','#addChar').val([empEmail]);
-        $(':input[name="empAddress"]','#addChar').val([empAddress]);
-        //$(':input[name="empEducation"]','#addChar').val([empEducation]);
 
+        //根据部门名称ajax获取职位
+        var department = $('select[name="empDepartment"]','#addChar').val();
+        //console.log(department);
+        $.ajax({
+            type: "post" ,
+            url: "/employee/queryJob.shtml"+"?"+department,
+            data: {"department":department},
+            dataType: "json",
+            success : function (data){
+                //城市下拉菜单id
+                var empTitleSelect = $('select[name="empTitle"]','#addChar');
+                //清空菜单
+                empTitleSelect.empty();
+                //json格式的城市对象数组
+                var jobs = eval(data);
+                $.each(jobs,function(index , item){
+                    //console.log(jobs[index])
+                    var jobName = jobs[index].jobName;
+                    empTitleSelect.append("<option value=\"" +jobName + "\">" +jobName+"</option>");
+                });
+                //刷新select
+                empTitleSelect.selectpicker('render');
+                empTitleSelect.selectpicker('refresh');
+            }
+
+        });
 
 
         var picker1 = $('#empBirthday3').datetimepicker({

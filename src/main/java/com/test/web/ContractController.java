@@ -2,6 +2,8 @@ package com.test.web;
 
 import com.test.entity.Contract;
 import com.test.service.ContractService;
+import com.test.service.ProductContractService;
+import com.test.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("contract")
@@ -17,10 +21,15 @@ import java.util.List;
 public class ContractController {
 
     private ContractService contractService;
+    private ProductContractService productContractService;
 
     @Autowired
-    public void setProductService(ContractService contractService) {
+    public void setContractService(ContractService contractService) {
         this.contractService = contractService;
+    }
+    @Autowired
+    public void setProductContractService(ProductContractService productContractService){
+        this.productContractService = productContractService;
     }
 
     //显示所有合同
@@ -33,7 +42,7 @@ public class ContractController {
         request.setAttribute("contractList", contractService.ListContractByPage(Integer.parseInt(page)-1));
         request.setAttribute("clientList", contractService.ListClient());
         request.setAttribute("sellerList", contractService.ListSeller());
-        System.out.println("controller:-------");
+        request.setAttribute("productList", contractService.ListProduct());
         return "contract";
     }
     //增加合同
@@ -41,6 +50,23 @@ public class ContractController {
     public String Product_add(HttpServletRequest request, Contract contract){
         HttpSession session = request.getSession();
         if (session.getAttribute("manager") != null) {
+            String[] productArray = contract.getContractProduct().split(",");
+            String productName = "";
+            List<String> productId = new ArrayList<String>();
+            for (int i = 0; i < productArray.length; i++){
+                if (i % 2 == 0){
+                    if (i != 0)
+                        productName = productName.concat(",");
+                    productName = productName.concat(productArray[i]);
+                }
+                else {
+                    productId.add(productArray[i]);
+                }
+            }
+            contract.setContractProduct(productName);
+            System.out.println(productName);
+            System.out.println(productId.size());
+
             int isAdd = contractService.addContract(contract);
             if (isAdd == -1){
                 request.setAttribute("contractInfo", "添加合同失败！");

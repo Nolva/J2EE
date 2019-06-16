@@ -18,15 +18,18 @@ public class ProductDao {
     private JdbcTemplate jdbcTemplate;
 
     private static final String INSERT = "INSERT INTO Product(productId,productName,productModel," +
-            "productNum,productPrice)VALUES(?,?,?,?,?)";
+            "productNum,productPrice,productCategory,productContract)VALUES(?,?,?,?,?,?,?)";
     private static final String DELETE = "DELETE FROM Product WHERE productId = ?";
     private static final String UPDATE = "UPDATE Product SET productName=?,productModel=?,productNum=?," +
-            "productPrice=? WHERE productId=?";
+            "productPrice=?, productCategory=? WHERE productId=?";
     private static final String GET = "SELECT * FROM Product WHERE productId = ?";
     private static final String SELECT ="SELECT * FROM Product ORDER BY productId";
     private static final String SELECT_BY_PAGE ="SELECT * FROM Product ORDER BY productId LIMIT ?,?";
     private static final String EXIST_PRODUCT = "SELECT COUNT(*) FROM Product WHERE productId=?";
     private static final String PRODUCT_SPECIES = "SELECT COUNT(*) FROM Product";
+    private static final String EXIST_PRODUCT_NAME = "SELECT COUNT(*) FROM Product WHERE productName=?";
+    private static final String EXIST_PRODUCT_MODEL = "SELECT COUNT(*) FROM Product WHERE productModel=? AND " +
+            "productModel!= (SELECT productModel FROM Product WHERE productId=?)";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -35,7 +38,8 @@ public class ProductDao {
 
     //增加产品
     public int addProduct(Product product){ return jdbcTemplate.update(INSERT, new Object[]{product.getProductId(),
-            product.getProductName(),product.getProductModel(),product.getProductNum(),product.getProductPrice()}); }
+            product.getProductName(),product.getProductModel(),product.getProductNum(),product.getProductPrice(),
+            product.getProductCategory(),""}); }
 
     //删除产品
     public int deleteProduct(String productId){ return jdbcTemplate.update(DELETE, new Object[]{productId});}
@@ -43,10 +47,11 @@ public class ProductDao {
     //修改产品
     public void updateProduct(Product product){
         int count = jdbcTemplate.update(UPDATE, new Object[]{product.getProductName(),
-            product.getProductModel(),product.getProductNum(),product.getProductPrice(),product.getProductId()});
-        if(count > 0){
-            System.out.println("更新成功!");
-        }
+            product.getProductModel(),product.getProductNum(),
+                product.getProductPrice(),product.getProductCategory(),product.getProductId()});
+//        if(count > 0){
+//            System.out.println("更新成功!");
+//        }
     }
 
     //查询单个产品的信息
@@ -110,5 +115,16 @@ public class ProductDao {
         return updateCounts;
     }
 
+    //判断产品名是否存在
+    public int searchProductName(String productName){
+        return jdbcTemplate.queryForObject(EXIST_PRODUCT_NAME,new Object[] {productName},Integer.class);
+
+    }
+
+    //判断产品型号是否存在
+    public int searchProductModel(String productModel, String productId){
+        return jdbcTemplate.queryForObject(EXIST_PRODUCT_MODEL,new Object[] {productModel, productId},Integer.class);
+
+    }
 
 }

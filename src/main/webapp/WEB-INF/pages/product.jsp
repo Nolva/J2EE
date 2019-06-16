@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap-datetimepicker.min.css" >
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/bootstrap/css/bootstrap-select.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/linearicons/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/vendor/chartist/css/chartist-custom.css">
@@ -74,7 +76,7 @@
                     </div>
                     <div class="panel-body">
                         <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#addChar">添加产品</button>
-                        <table class="table">
+                        <table class="table" id="table">
                             <thead>
                             <tr>
                                 <th>产品编号</th>
@@ -82,6 +84,8 @@
                                 <th>产品型号</th>
                                 <th>产品数量</th>
                                 <th>产品价格</th>
+                                <th>产品分类</th>
+                                <th>涉及合同</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -90,13 +94,17 @@
                                 <%--<s:property value="#vs.index+1"/><br>--%>
                                 <tr role="row" data-productId="${product.productId}" data-productName="${product.productName}"
                                     data-productModel="${product.productModel}" data-productNum="${product.productNum}"
-                                    data-productPrice="${product.productPrice}">
+                                    data-productPrice="${product.productPrice}"
+                                    data-productCategory="${product.productCategory}"
+                                    data-productContract="${product.productContract}">
                                     <%--<td>${vs.index+1+(currentPage-1)*5}</td>--%>
                                     <td>${product.productId}</td>
                                     <td>${product.productName}</td>
                                     <td>${product.productModel}</td>
                                     <td>${product.productNum}</td>
                                     <td>${product.productPrice}</td>
+                                    <td>${product.productCategory}</td>
+                                    <td>${product.productContract}</td>
                                     <td>
                                         <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#changeChar">修改</button>
                                         <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteChar">删除</button>
@@ -170,6 +178,16 @@
                                 <label for="productPrice" class="col-xs-3 control-label">产品价格：</label>
                                 <div class="col-xs-6 ">
                                     <input type="" required="required" class="form-control input-sm duiqi" id="productPrice" name="productPrice" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label  class="col-xs-3 control-label">产品分类：</label>
+                                <div class="col-xs-6 ">
+                                    <select class="form-control input-sm duiqi selectpicker" name="productCategory" >
+                                        <c:forEach items="${categoryList}" var="category">
+                                            <option value="${category.categoryName}">${category.categoryName}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -261,6 +279,16 @@
                                     <input type="" required="required" class="form-control input-sm duiqi" id="productPrice3" name="productPrice" placeholder="">
                                 </div>
                             </div>
+                            <div class="form-group ">
+                                <label  class="col-xs-3 control-label">产品分类：</label>
+                                <div class="col-xs-6 ">
+                                    <select class="form-control input-sm duiqi selectpicker" name="productCategory" >
+                                        <c:forEach items="${categoryList}" var="category">
+                                            <option value="${category.categoryName}">${category.categoryName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
                                 <button type="submit" class="btn btn-xs btn-green">添加</button>
@@ -287,6 +315,12 @@
 <!-- Javascript -->
 <script src="${pageContext.request.contextPath}/assets/vendor/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap-datetimepicker.min.js" ></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap-datetimepicker.js" ></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" ></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap-datetimepicker.fr.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap-select.js"></script>
+<script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/defaults-zh_CN.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/chartist/js/chartist.min.js"></script>
@@ -301,11 +335,19 @@
         var productModel = $tr.attr('data-productModel');
         var productNum = $tr.attr('data-productNum');
         var productPrice = $tr.attr('data-productPrice');
+        var productCategory = $tr.attr('data-productCategory');
+
         $(':input[name="productId"]','#changeChar').val(productId);
         $(':input[name="productName"]','#changeChar').val(productName);
         $(':input[name="productModel"]','#changeChar').val(productModel);
         $(':input[name="productNum"]','#changeChar').val([productNum]);
         $(':input[name="productPrice"]','#changeChar').val([productPrice]);
+
+        $('select option[value="'+productCategory+'"]','#changeChar').attr("selected",true);
+        //进行select刷新
+        $('select[name="productCategory"]','#changeChar').selectpicker('render');
+        $('select[name="productCategory"]','#changeChar').selectpicker('refresh');
+
 
     });
 
@@ -315,6 +357,12 @@
         var productId = $tr.attr('data-productId');
         $(':input[name="productId"]','#deleteChar').val(productId);
     });
+
+    // $('#addChar').on('show.bs.modal',function(event) {
+    //     var table = $('#table');
+    //     table.empty();
+    //
+    // });
 
 </script>
 </body>
