@@ -59,6 +59,15 @@ public class Product implements Serializable {
         this.productContract = productContract;
     }
 
+    public void setProductPrice(Double productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public void setProductNum(Integer productNum) {
+
+        this.productNum = productNum;
+    }
+
     @Override
     public String toString() {
         return "Product [productId=" + productId + ", productName=" + productName + ", productModel=" + productModel

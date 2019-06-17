@@ -163,7 +163,7 @@
                                     <div class="col-xs-6 ">
                                         <select class="form-control input-sm duiqi selectpicker" name="clientNo" >
                                            <c:forEach items="${clientList}" var="client">
-                                               <option value="${client.cliName}（${client.clientId}）">${client.cliName}(客户编号：${client.clientId})</option>
+                                               <option value="${client.cliName}（${client.clientId}）">${client.cliName}（${client.clientId}）</option>
                                            </c:forEach>
                                         </select>
                                     </div>
@@ -173,7 +173,7 @@
                                 <div class="col-xs-6 ">
                                     <select class="form-control input-sm duiqi selectpicker" name="employeeId" >
                                         <c:forEach items="${sellerList}" var="seller">
-                                            <option value="${seller.empName}（${seller.employeeId}）">${seller.empName}(销售员编号：${seller.employeeId})</option>
+                                            <option value="${seller.empName}（${seller.employeeId}）">${seller.empName}（${seller.employeeId}）</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -302,7 +302,7 @@
                                 <div class="col-xs-6 ">
                                     <select class="form-control input-sm duiqi selectpicker" name="clientNo" >
                                         <c:forEach items="${clientList}" var="client">
-                                            <option value="${client.cliName}（${client.clientId}）">${client.cliName}(客户编号：${client.clientId})</option>
+                                            <option value="${client.cliName}（${client.clientId}）">${client.cliName}（${client.clientId}）</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -312,7 +312,7 @@
                                 <div class="col-xs-6 ">
                                     <select class="form-control input-sm duiqi selectpicker" name="employeeId" >
                                         <c:forEach items="${sellerList}" var="seller">
-                                            <option value="${seller.empName}（${seller.employeeId}）">${seller.empName}(销售员编号：${seller.employeeId})</option>
+                                            <option  value="${seller.empName}（${seller.employeeId}）">${seller.empName}（${seller.employeeId}）</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -408,8 +408,8 @@
         var source = event.relatedTarget;
         var $tr = $(source).closest('tr');
         var contractId = $tr.attr('data-contractId');
-        //var clientNo = $tr.attr('data-clientNo');
-        //var employeeId = $tr.attr('data-employeeId');
+        var clientNo = $tr.attr('data-clientNo');
+        var employeeId = $tr.attr('data-employeeId');
         var contractName = $tr.attr('data-contractName');
         var contractContent = $tr.attr('data-contractContent');
         var contractProduct = $tr.attr('data-contractProduct');
@@ -438,7 +438,17 @@
         //进行select刷新
         $('select[name="contractProduct"]','#changeChar').selectpicker('render');
         $('select[name="contractProduct"]','#changeChar').selectpicker('refresh');
-        
+
+
+        $('select[name="clientNo"] option[value="'+clientNo+'"]','#changeChar').prop("selected",true);
+        //进行select刷新
+        $('select[name="clientNo"]','#changeChar').selectpicker('render');
+        $('select[name="clientNo"]','#changeChar').selectpicker('refresh');
+
+        $('select[name="employeeId"] option[value="'+employeeId+'"]','#changeChar').prop("selected",true);
+        //进行select刷新
+        $('select[name="employeeId"]','#changeChar').selectpicker('render');
+        $('select[name="employeeId"]','#changeChar').selectpicker('refresh');
 
         var picker1 = $('#datetimepicker1').datetimepicker({
             //startView: 4,  //起始选择范围

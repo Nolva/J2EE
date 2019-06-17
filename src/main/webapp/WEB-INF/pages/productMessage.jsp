@@ -5,7 +5,7 @@
 </head>
 <script>
     alert("${productInfo}");
-    window.location.href='/product/products';
+    window.location.href="/product/products?category=${category}";
 </script>
 <body>
 

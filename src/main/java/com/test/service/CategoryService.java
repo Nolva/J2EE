@@ -16,7 +16,7 @@ public class CategoryService {
         this.categoryDao = categoryDao;
     }
 
-    //查询职位信息
+    //查询信息
     public List<Category> ListCategory() {
         return categoryDao.ListCategory();
     }

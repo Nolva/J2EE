@@ -52,7 +52,7 @@ public class ContractController {
         if (session.getAttribute("manager") != null) {
             String[] productArray = contract.getContractProduct().split(",");
             String productName = "";
-            List<String> productId = new ArrayList<String>();
+            List<String> productId = new ArrayList<>();
             for (int i = 0; i < productArray.length; i++){
                 if (i % 2 == 0){
                     if (i != 0)
@@ -64,8 +64,8 @@ public class ContractController {
                 }
             }
             contract.setContractProduct(productName);
-            System.out.println(productName);
-            System.out.println(productId.size());
+//            System.out.println(productName);
+//            System.out.println(productId.size());
 
             int isAdd = contractService.addContract(contract);
             if (isAdd == -1){
@@ -73,6 +73,7 @@ public class ContractController {
             }else if (isAdd == 1){
                 request.setAttribute("contractInfo", "合同ID已存在，添加失败！");
             }else{
+                productContractService.addById(productId, contract.getContractId());
                 request.setAttribute("contractInfo", "添加合同成功！");
             }
             return "contractMessage";
@@ -89,6 +90,7 @@ public class ContractController {
             if (!isDelete) {
                 request.setAttribute("contractInfo", "无法删除该合同！");
             } else {
+                productContractService.deleteById(contract.getContractId());
                 request.setAttribute("contractInfo", "删除合同成功！");
             }
             return "contractMessage";
@@ -101,11 +103,27 @@ public class ContractController {
     public String update(HttpServletRequest request, Contract contract){
         HttpSession session = request.getSession();
         if (session.getAttribute("manager") != null) {
+            String[] productArray = contract.getContractProduct().split(",");
+            String productName = "";
+            List<String> productId = new ArrayList<>();
+            for (int i = 0; i < productArray.length; i++){
+                if (i % 2 == 0){
+                    if (i != 0)
+                        productName = productName.concat(",");
+                    productName = productName.concat(productArray[i]);
+                }
+                else {
+                    productId.add(productArray[i]);
+                }
+            }
+            contract.setContractProduct(productName);
             //System.out.println(contract.getClientNo());
             boolean isUpdate = contractService.updateContractId(contract);
             if (!isUpdate) {
                 request.setAttribute("contractInfo", "无法修改该合同！");
             } else {
+                productContractService.deleteById(contract.getContractId());
+                productContractService.addById(productId, contract.getContractId());
                 request.setAttribute("contractInfo", "修改合同成功！");
             }
             return "contractMessage";

@@ -76,6 +76,18 @@
                     </div>
                     <div class="panel-body">
                         <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#addChar">添加产品</button>
+                        <select ID="CATE_SELECT" class="selectpicker"  name="toCategory" onchange="selectCategoryPost()" >
+                            <c:set var="productCategory" value="${productCategory}"></c:set>
+                                <option value="全部" >全部</option>
+                            <c:forEach items="${categoryList}" var="category">
+                                <c:if test="${productCategory eq category}">
+                                    <option value="${category.categoryName}" selected="true">${category.categoryName}</option>
+                                </c:if>
+                                <c:if test="${productCategory ne category}">
+                                    <option value="${category.categoryName}">${category.categoryName}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
                         <table class="table" id="table">
                             <thead>
                             <tr>
@@ -222,6 +234,12 @@
                                     <input type="" class="form-control input-sm duiqi" id="productId2" name="productId" >
                                 </div>
                             </div>
+                            <div class="form-group " style="display:none;">
+                                <label for="productCategory2" class="col-xs-3 control-label">产品分类：</label>
+                                <div class="col-xs-6 ">
+                                    <input type="" class="form-control input-sm duiqi" id="productCategory2" name="productCategory" }>
+                                </div>
+                            </div>
                             <div class="form-group " >
                                 确定要删除该产品？删除后不可恢复！
                             </div>
@@ -326,6 +344,10 @@
 <script src="${pageContext.request.contextPath}/assets/vendor/chartist/js/chartist.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/scripts/common.js"></script>
 <script>
+
+    $('#CATE_SELECT').selectpicker({
+        width: '150px'});
+
     // 编辑对话框
     $('#changeChar').on('show.bs.modal',function(event){
         var source = event.relatedTarget;
@@ -355,15 +377,66 @@
         var source = event.relatedTarget;
         var $tr = $(source).closest('tr');
         var productId = $tr.attr('data-productId');
+        var productCategory = $tr.attr('data-productCategory');
         $(':input[name="productId"]','#deleteChar').val(productId);
+        $(':input[name="productCategory"]','#deleteChar').val(productCategory);
     });
+    
+    function selectCategory() {
+        var category = $("#CATE_SELECT").val();
+        $.ajax({
+            type: "post" ,
+            url: "/product/queryCategory.shtml"+"?"+category,
+            data: {"category":category},
+            dataType: "json",
+            success : function (data){
+                var table = $('#table tbody');
+                //清空菜单
+                table.empty();
+                //json格式的城市对象数组
+                var products = eval(data);
+                $.each(products,function(index , item){
+                    table.append(
+                        "                              <tr role=\"row\" data-productId=\""+products[index].productId+"\" " +
+                        "                                    data-productName=\""+products[index].productName+"\"\n" +
+                        "                                    data-productModel=\""+products[index].productModel+"\""+
+                        "                                    data-productNum=\""+products[index].productNum+"\"\n" +
+                        "                                    data-productPrice=\""+products[index].productPrice+"\"\n" +
+                        "                                    data-productCategory=\""+products[index].productCategory+"\"\n" +
+                        "                                    data-productContract=\""+products[index].productContract+"\">\n"+
+                        "                                    <td>"+products[index].productId+"</td>\n" +
+                        "                                    <td>"+products[index].productName+"</td>\n" +
+                        "                                    <td>"+products[index].productModel+"</td>\n" +
+                        "                                    <td>"+products[index].productNum+"</td>\n" +
+                        "                                    <td>"+products[index].productPrice+"</td>\n" +
+                        "                                    <td>"+products[index].productCategory+"</td>\n" +
+                        "                                    <td>"+products[index].productContract+"</td>\n" +
+                        "                                    <td>\n" +
+                        "                                        <button class=\"btn btn-success btn-xs\" data-toggle=\"modal\" data-target=\"#changeChar\">修改</button>\n" +
+                        "                                        <button class=\"btn btn-danger btn-xs\" data-toggle=\"modal\" data-target=\"#deleteChar\">删除</button>\n" +
+                        "                                    </td>\n" +
+                        "                                </tr>"
+                    )
+                });
+            }
 
-    // $('#addChar').on('show.bs.modal',function(event) {
-    //     var table = $('#table');
-    //     table.empty();
-    //
-    // });
+        });
+    }
 
+    function selectCategoryPost() {
+        var category = $("#CATE_SELECT").val();
+        window.location.href="/product/products?category="+category;
+        // $.ajax({
+        //     async:false,
+        //     type: "post" ,
+        //     url: "product/products",
+        //     data:{category:category},
+        //     success:function(data){
+        //         window.location.href="/product/products?category="+category;
+        //         console.log("发送成功")
+        //     }
+        // })
+    }
 </script>
 </body>
 

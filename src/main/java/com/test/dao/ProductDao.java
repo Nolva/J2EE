@@ -24,12 +24,16 @@ public class ProductDao {
             "productPrice=?, productCategory=? WHERE productId=?";
     private static final String GET = "SELECT * FROM Product WHERE productId = ?";
     private static final String SELECT ="SELECT * FROM Product ORDER BY productId";
+    private static final String SELECT_BY_NAME = "SELECT * FROM product WHERE productCategory=?";
     private static final String SELECT_BY_PAGE ="SELECT * FROM Product ORDER BY productId LIMIT ?,?";
+    private static final String SELECT_BY_PAGE_AND_NAME = "SELECT * FROM Product WHERE productCategory=? ORDER BY productId LIMIT ?,?";
     private static final String EXIST_PRODUCT = "SELECT COUNT(*) FROM Product WHERE productId=?";
     private static final String PRODUCT_SPECIES = "SELECT COUNT(*) FROM Product";
+    private static final String PRODUCT_SPECIES_BY_NAME = "SELECT COUNT(*) FROM Product WHERE productCategory=?";
     private static final String EXIST_PRODUCT_NAME = "SELECT COUNT(*) FROM Product WHERE productName=?";
     private static final String EXIST_PRODUCT_MODEL = "SELECT COUNT(*) FROM Product WHERE productModel=? AND " +
             "productModel!= (SELECT productModel FROM Product WHERE productId=?)";
+    private static final String UPDATE_CONTRACT = "UPDATE Product SET productContract=? WHERE productId=?";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -77,6 +81,16 @@ public class ProductDao {
         return products;
     }
 
+    public List<Product> ListProductByName(String category){
+        RowMapper<Product> rowMapper = new BeanPropertyRowMapper<>(Product.class);
+        return jdbcTemplate.query(SELECT_BY_NAME, new Object[]{category}, rowMapper);
+    }
+
+    public List<Product> ListProductByPageAndName(String category, int startIndex, int pageSize){
+        return jdbcTemplate.query(SELECT_BY_PAGE_AND_NAME,new Object[]{category,startIndex,pageSize},new BeanPropertyRowMapper<>(Product.class));
+
+    }
+
     //当前页的集合
     public List<Product> ListProductByPage(int startIndex, int pageSize){
         return jdbcTemplate.query(SELECT_BY_PAGE,new Object[]{startIndex,pageSize},new BeanPropertyRowMapper<>(Product.class));
@@ -89,6 +103,10 @@ public class ProductDao {
     //查询产品种类的数量
     public int ProductSpecies(){
         return jdbcTemplate.queryForObject(PRODUCT_SPECIES,Integer.class);
+    }
+
+    public int ProductSpeciesByName(String category){
+        return jdbcTemplate.queryForObject(PRODUCT_SPECIES_BY_NAME,new Object[]{category}, Integer.class);
     }
 
     //批量操作(增删改)
@@ -125,6 +143,11 @@ public class ProductDao {
     public int searchProductModel(String productModel, String productId){
         return jdbcTemplate.queryForObject(EXIST_PRODUCT_MODEL,new Object[] {productModel, productId},Integer.class);
 
+    }
+
+    //修改产品涉及合同内容
+    public void updateContract(String contract, String productId){
+        jdbcTemplate.update(UPDATE_CONTRACT, new Object[]{contract, productId});
     }
 
 }

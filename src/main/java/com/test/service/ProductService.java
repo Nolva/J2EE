@@ -64,15 +64,28 @@ public class ProductService {
         return productDao.ListProduct();
     }
 
+    //部分查询
+    public List<Product> ListProductByName(String category){
+        return productDao.ListProductByName(category);
+    }
+
+
     //分页查询
     public List<Product> ListProductByPage(int pageNum){
         return productDao.ListProductByPage(pageNum*PAGE_SIZE, PAGE_SIZE);
     }
 
+    public List<Product> ListProductByPageAndName(String category, int pageNum){
+        return productDao.ListProductByPageAndName(category,pageNum*PAGE_SIZE, PAGE_SIZE);
+    }
 
     //返回产品总数量
     public int getProductNum(){
         return productDao.ProductSpecies();
+    }
+
+    public int getProductNumByName(String category){
+        return productDao.ProductSpeciesByName(category);
     }
 
     //返回总页数
@@ -81,4 +94,8 @@ public class ProductService {
         return pageDao.getTotalPage(total, PAGE_SIZE);
     }
 
+    public int getTotalPageByName(String category){
+        int total = productDao.ProductSpeciesByName(category);
+        return pageDao.getTotalPage(total, PAGE_SIZE);
+    }
 }
